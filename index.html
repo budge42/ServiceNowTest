@@ -134,77 +134,245 @@
     <script>
         const sections = {
             platformOverview: [
-                {
-                    question: "What does the 'Client' option on a UI Action indicate?",
-                    options: [
-                        { answer: "The action will execute server-side code.", correct: false },
-                        { answer: "The action will run a business rule before performing.", correct: false },
-                        { answer: "The action will run on the client-side, in the user's browser.", correct: true },
-                        { answer: "The action will execute immediately after saving the record.", correct: false }
-                    ]
-                },
-                // Add more questions in this section
-            ],
-            instanceConfig: [
-                {
-                    question: "What is a Transform Map used for in ServiceNow?",
-                    options: [
-                        { answer: "It schedules data imports from external sources.", correct: false },
-                        { answer: "It maps records from one ServiceNow instance to another.", correct: false },
-                        { answer: "It defines the relationship between fields in a data import and fields in a target table.", correct: true },
-                        { answer: "It manages the real-time syncing of data between multiple tables.", correct: false }
-                    ]
-                },
-                // Add more questions in this section
-            ],
-            appCollab: [
-                {
-                    question: "What method is most useful for debugging a Client Script in ServiceNow?",
-                    options: [
-                        { answer: "Adding log messages to the script using gs.log().", correct: false },
-                        { answer: "Using the JavaScript Debugger in the browser's Developer Tools.", correct: true },
-                        { answer: "Checking the email logs for errors.", correct: false },
-                        { answer: "Running the Record Producer.", correct: false }
-                    ]
-                },
-                // Add more questions in this section
-            ],
-            selfService: [
-                {
-                    question: "What is an Event in ServiceNow?",
-                    options: [
-                        { answer: "A scheduled job that runs a script periodically.", correct: false },
-                        { answer: "A server-side function that runs every time a record is created.", correct: false },
-                        { answer: "A notification sent to users whenever an important record is modified.", correct: false },
-                        { answer: "A mechanism for generating messages when specific conditions occur.", correct: true }
-                    ]
-                },
-                // Add more questions in this section
-            ],
-            dbManagement: [
-                {
-                    question: "What is the main purpose of an SLA in ServiceNow?",
-                    options: [
-                        { answer: "To track the total number of requests submitted by a user.", correct: false },
-                        { answer: "To ensure that the system is running efficiently.", correct: false },
-                        { answer: "To ensure that the agreed service levels are met and tracked.", correct: true },
-                        { answer: "To monitor performance of the ServiceNow instance.", correct: false }
-                    ]
-                },
-                // Add more questions in this section
-            ],
-            dataMigration: [
-                {
-                    question: "What does a Data Policy do in ServiceNow?",
-                    options: [
-                        { answer: "It controls the field's visibility in the form.", correct: false },
-                        { answer: "It validates the data entered into a field.", correct: false },
-                        { answer: "It enforces rules to ensure consistency of data across the application.", correct: true },
-                        { answer: "It restricts access to the records based on user roles.", correct: false }
-                    ]
-                },
-                // Add more questions in this section
-            ]
+    {
+        question: "What is the purpose of a 'User Preference' in ServiceNow?",
+        options: [
+            { answer: "It stores a user's role and permissions.", correct: false },
+            { answer: "It allows users to personalize the look and feel of their instance.", correct: true },
+            { answer: "It provides access control for applications.", correct: false },
+            { answer: "It manages the lifecycle of records.", correct: false }
+        ]
+    },
+    {
+        question: "What is 'Contextual Search' in ServiceNow?",
+        options: [
+            { answer: "It allows searching across all applications.", correct: false },
+            { answer: "It suggests relevant knowledge articles based on the current record.", correct: true },
+            { answer: "It provides full-text search capabilities across incidents.", correct: false },
+            { answer: "It filters records in a specific table.", correct: false }
+        ]
+    },
+    {
+        question: "What is the difference between 'Form Layout' and 'Form Designer' in ServiceNow?",
+        options: [
+            { answer: "Form Layout is used for arranging fields in sections, while Form Designer is used for adding new fields.", correct: false },
+            { answer: "Form Layout allows users to configure related lists, while Form Designer allows graphical drag-and-drop configuration of fields.", correct: true },
+            { answer: "Form Layout can only be used by administrators, while Form Designer is for all users.", correct: false },
+            { answer: "There is no difference between the two.", correct: false }
+        ]
+    },
+    {
+        question: "How does ServiceNow's 'Global Search' feature work?",
+        options: [
+            { answer: "It searches for records within a single table.", correct: false },
+            { answer: "It performs a full-text search across multiple tables in the instance.", correct: true },
+            { answer: "It only searches within a user's favorite records.", correct: false },
+            { answer: "It returns only Knowledge Articles in the search results.", correct: false }
+        ]
+    },
+    {
+        question: "How can a user access their 'User Preferences' in ServiceNow?",
+        options: [
+            { answer: "By navigating to the 'Self-Service' application.", correct: false },
+            { answer: "Through the gear icon located on the ServiceNow header bar.", correct: true },
+            { answer: "By submitting a request to the Service Desk.", correct: false },
+            { answer: "By modifying their role permissions.", correct: false }
+        ]
+    }
+],
+
+instanceConfig: [
+    {
+        question: "What is a 'Transform Map' used for in ServiceNow?",
+        options: [
+            { answer: "It converts currency fields into different formats.", correct: false },
+            { answer: "It defines the mapping between source fields in an import set and target fields in a target table.", correct: true },
+            { answer: "It is used for converting client-side scripts into server-side scripts.", correct: false },
+            { answer: "It is used to configure role-based access control.", correct: false }
+        ]
+    },
+    {
+        question: "What is the purpose of 'Dictionary Overrides' in ServiceNow?",
+        options: [
+            { answer: "To customize the form layout of specific fields.", correct: false },
+            { answer: "To allow administrators to define field properties for child tables in table inheritance.", correct: true },
+            { answer: "To override the access control rules of parent tables.", correct: false },
+            { answer: "To configure dynamic notifications based on record state.", correct: false }
+        ]
+    },
+    {
+        question: "What does the 'Coalesce' field indicate in a Transform Map?",
+        options: [
+            { answer: "It prevents any record from being updated during import.", correct: false },
+            { answer: "It determines whether existing records should be updated based on matching field values.", correct: true },
+            { answer: "It allows all imported records to be ignored.", correct: false },
+            { answer: "It defines a primary key for the import table.", correct: false }
+        ]
+    },
+    {
+        question: "What is the best practice for creating custom tables in ServiceNow?",
+        options: [
+            { answer: "Always inherit from an existing table, like the Task table, if possible.", correct: true },
+            { answer: "Create a standalone table to avoid dependency.", correct: false },
+            { answer: "Always create tables as a child of the CMDB.", correct: false },
+            { answer: "Use duplicate tables to retain structure.", correct: false }
+        ]
+    },
+    {
+        question: "What is a 'Business Rule' in ServiceNow?",
+        options: [
+            { answer: "It runs client-side scripts when a record is updated.", correct: false },
+            { answer: "It runs server-side scripts when a record is inserted, updated, or deleted.", correct: true },
+            { answer: "It manages form layouts dynamically.", correct: false },
+            { answer: "It schedules background jobs for the instance.", correct: false }
+        ]
+    }
+],
+
+appCollab: [
+    {
+        question: "What is the role of a 'UI Policy' in ServiceNow?",
+        options: [
+            { answer: "To trigger server-side events when certain conditions are met.", correct: false },
+            { answer: "To dynamically change form behavior, such as making fields mandatory or hidden.", correct: true },
+            { answer: "To validate form data before it is saved to the database.", correct: false },
+            { answer: "To manage user permissions for different applications.", correct: false }
+        ]
+    },
+    {
+        question: "How does the 'GlideAjax' API facilitate collaboration between client and server in ServiceNow?",
+        options: [
+            { answer: "It allows client-side scripts to asynchronously call server-side scripts.", correct: true },
+            { answer: "It enables server-side logging for debugging client scripts.", correct: false },
+            { answer: "It handles authentication of external users accessing ServiceNow.", correct: false },
+            { answer: "It triggers workflows based on user actions.", correct: false }
+        ]
+    },
+    {
+        question: "What is a 'Record Producer' in the ServiceNow Service Catalog?",
+        options: [
+            { answer: "It is a reusable form that creates task records based on user input.", correct: true },
+            { answer: "It is used to generate performance reports for incidents.", correct: false },
+            { answer: "It manages the security roles of users requesting catalog items.", correct: false },
+            { answer: "It is a template for creating custom workflows.", correct: false }
+        ]
+    },
+    {
+        question: "How can 'Workflows' be used to improve collaboration in ServiceNow?",
+        options: [
+            { answer: "By automating approvals, notifications, and task assignments across departments.", correct: true },
+            { answer: "By sending emails to notify users when changes are made.", correct: false },
+            { answer: "By logging all user activity in the platform for auditing purposes.", correct: false },
+            { answer: "By enforcing role-based security policies for catalog items.", correct: false }
+        ]
+    },
+    {
+        question: "What is the function of 'SLA' in ServiceNow?",
+        options: [
+            { answer: "To track the performance of workflows.", correct: false },
+            { answer: "To ensure that service commitments to customers are met.", correct: true },
+            { answer: "To manage user permissions for accessing applications.", correct: false },
+            { answer: "To schedule tasks based on user roles.", correct: false }
+        ]
+    }
+],
+
+selfService: [
+    {
+        question: "What does the 'Service Catalog' provide in ServiceNow?",
+        options: [
+            { answer: "A portal for users to report incidents.", correct: false },
+            { answer: "A platform for requesting goods and services, automating the approval and delivery process.", correct: true },
+            { answer: "A way for users to manage their personal information.", correct: false },
+            { answer: "A system for tracking hardware assets.", correct: false }
+        ]
+    },
+    {
+        question: "What is the 'Knowledge Base' in ServiceNow primarily used for?",
+        options: [
+            { answer: "Tracking incidents and change requests.", correct: false },
+            { answer: "Creating and managing self-service articles for users to resolve issues independently.", correct: true },
+            { answer: "Monitoring performance of the ServiceNow instance.", correct: false },
+            { answer: "Logging system activity for audit purposes.", correct: false }
+        ]
+    },
+    {
+        question: "How are 'Knowledge Articles' classified in ServiceNow?",
+        options: [
+            { answer: "By role and permissions.", correct: false },
+            { answer: "By category, topic, and workflow state.", correct: true },
+            { answer: "By the user's department and location.", correct: false },
+            { answer: "By the application version used.", correct: false }
+        ]
+    },
+    {
+        question: "What is a 'Record Producer' in ServiceNow?",
+        options: [
+            { answer: "It provides a user-friendly interface for creating tasks in ServiceNow.", correct: true },
+            { answer: "It manages the lifecycle of incident records.", correct: false },
+            { answer: "It imports data into the CMDB.", correct: false },
+            { answer: "It generates reports based on record updates.", correct: false }
+        ]
+    },
+    {
+        question: "How does 'Contextual Search' improve self-service in ServiceNow?",
+        options: [
+            { answer: "It automates form submissions.", correct: false },
+            { answer: "It dynamically suggests relevant knowledge articles based on the user's current record.", correct: true },
+            { answer: "It tracks the performance of workflows in the Service Catalog.", correct: false },
+            { answer: "It filters requests based on priority.", correct: false }
+        ]
+    }
+],
+
+dbManagement: [
+    {
+        question: "What is the purpose of 'GlideRecord' in ServiceNow?",
+        options: [
+            { answer: "To execute SQL-like queries on ServiceNow tables.", correct: true },
+            { answer: "To manage the workflows associated with database entries.", correct: false },
+            { answer: "To enforce UI policies on forms.", correct: false },
+            { answer: "To schedule background jobs in ServiceNow.", correct: false }
+        ]
+    },
+    {
+        question: "What is a 'CMDB Baseline' used for in ServiceNow?",
+        options: [
+            { answer: "To define relationships between tasks and users.", correct: false },
+            { answer: "To take a snapshot of the CMDB configuration items (CIs) at a given point in time.", correct: true },
+            { answer: "To back up the CMDB data in case of an incident.", correct: false },
+            { answer: "To manage the state transitions of incident records.", correct: false }
+        ]
+    },
+    {
+        question: "What is the purpose of 'Table Inheritance' in ServiceNow?",
+        options: [
+            { answer: "It allows fields from a parent table to be available on child tables.", correct: true },
+            { answer: "It manages security roles for incident management.", correct: false },
+            { answer: "It tracks task dependencies in workflows.", correct: false },
+            { answer: "It allows for multiple records to be created simultaneously.", correct: false }
+        ]
+    },
+    {
+        question: "What does the 'gs.addInfoMessage()' function do?",
+        options: [
+            { answer: "It logs a message to the system log.", correct: false },
+            { answer: "It displays a message to the user at the top of the current form or list.", correct: true },
+            { answer: "It sends an email to the system administrator.", correct: false },
+            { answer: "It triggers a workflow to create a new task.", correct: false }
+        ]
+    },
+    {
+        question: "What does the 'task_sla' table in ServiceNow store?",
+        options: [
+            { answer: "It stores the Service Level Agreement records for tasks.", correct: true },
+            { answer: "It logs user activity for auditing purposes.", correct: false },
+            { answer: "It tracks the status of background jobs.", correct: false },
+            { answer: "It manages the state transitions of incidents.", correct: false }
+        ]
+    }
+]
+
         };
 
         const questionsPerPage = 5;
