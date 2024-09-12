@@ -49,7 +49,6 @@
             cursor: pointer;
             transition: background-color 0.3s ease;
             background-color: #ffffff;
-
         }
 
         .options button:hover {
@@ -73,21 +72,132 @@
 <body>
 
     <div class="container">
-        <h1>ServiceNow Quiz - Test</h1>
-        <div class="question">
-            <h3>1. What does the 'Client' option on a UI Action indicate?</h3>
-            <div class="options">
-                <button onclick="checkAnswer(this, false)">The action will execute server-side code.</button>
-                <button onclick="checkAnswer(this, false)">The action will run a business rule before performing.</button>
-                <button onclick="checkAnswer(this, true)">The action will run on the client-side, in the user's browser.</button>
-                <button onclick="checkAnswer(this, false)">The action will execute immediately after saving the record.</button>
-            </div>
-        </div>
+        <h1>ServiceNow Quiz</h1>
+        <div id="quiz"></div>
     </div>
 
     <script>
+        const questions = [
+            {
+                question: "1. What does the 'Client' option on a UI Action indicate?",
+                options: [
+                    { answer: "The action will execute server-side code.", correct: false },
+                    { answer: "The action will run a business rule before performing.", correct: false },
+                    { answer: "The action will run on the client-side, in the user's browser.", correct: true },
+                    { answer: "The action will execute immediately after saving the record.", correct: false }
+                ]
+            },
+            {
+                question: "2. What is a Transform Map used for in ServiceNow?",
+                options: [
+                    { answer: "It schedules data imports from external sources.", correct: false },
+                    { answer: "It maps records from one ServiceNow instance to another.", correct: false },
+                    { answer: "It defines the relationship between fields in a data import and fields in a target table.", correct: true },
+                    { answer: "It manages the real-time syncing of data between multiple tables.", correct: false }
+                ]
+            },
+            {
+                question: "3. What method is most useful for debugging a Client Script in ServiceNow?",
+                options: [
+                    { answer: "Adding log messages to the script using `gs.log()`.", correct: false },
+                    { answer: "Using the JavaScript Debugger in the browser's Developer Tools.", correct: true },
+                    { answer: "Checking the email logs for errors.", correct: false },
+                    { answer: "Running the Record Producer.", correct: false }
+                ]
+            },
+            {
+                question: "4. What is an Event in ServiceNow?",
+                options: [
+                    { answer: "A scheduled job that runs a script periodically.", correct: false },
+                    { answer: "A server-side function that runs every time a record is created.", correct: false },
+                    { answer: "A notification sent to users whenever an important record is modified.", correct: false },
+                    { answer: "A mechanism for generating messages when specific conditions occur.", correct: true }
+                ]
+            },
+            {
+                question: "5. What is the main purpose of an SLA in ServiceNow?",
+                options: [
+                    { answer: "To track the total number of requests submitted by a user.", correct: false },
+                    { answer: "To ensure that the system is running efficiently.", correct: false },
+                    { answer: "To ensure that the agreed service levels are met and tracked.", correct: true },
+                    { answer: "To monitor performance of the ServiceNow instance.", correct: false }
+                ]
+            },
+            {
+                question: "6. What does a Data Policy do in ServiceNow?",
+                options: [
+                    { answer: "It controls the field's visibility in the form.", correct: false },
+                    { answer: "It validates the data entered into a field.", correct: false },
+                    { answer: "It enforces rules to ensure consistency of data across the application.", correct: true },
+                    { answer: "It restricts access to the records based on user roles.", correct: false }
+                ]
+            },
+            {
+                question: "7. What is the use of GlideRecord in ServiceNow?",
+                options: [
+                    { answer: "It is used to execute SQL queries on the database.", correct: false },
+                    { answer: "It is a server-side object used to perform operations on a database table.", correct: true },
+                    { answer: "It is used to handle client-side operations.", correct: false },
+                    { answer: "It is used to manage workflows.", correct: false }
+                ]
+            },
+            {
+                question: "8. What is the purpose of a UI Policy?",
+                options: [
+                    { answer: "To change field values on a form.", correct: false },
+                    { answer: "To dynamically change the form's appearance or field behavior.", correct: true },
+                    { answer: "To automate form submission.", correct: false },
+                    { answer: "To create client-side rules for validating data.", correct: false }
+                ]
+            },
+            {
+                question: "9. How do you add a new field to a ServiceNow form?",
+                options: [
+                    { answer: "Through a business rule.", correct: false },
+                    { answer: "By customizing the form layout.", correct: false },
+                    { answer: "By creating a UI action.", correct: false },
+                    { answer: "By using a dictionary entry.", correct: true }
+                ]
+            },
+            {
+                question: "10. What are ACLs used for in ServiceNow?",
+                options: [
+                    { answer: "To manage access to records in tables.", correct: true },
+                    { answer: "To automate form submission.", correct: false },
+                    { answer: "To enforce UI Policies.", correct: false },
+                    { answer: "To log errors in the system.", correct: false }
+                ]
+            }
+        ];
+
+        // Function to render quiz
+        function renderQuiz() {
+            const quizContainer = document.getElementById('quiz');
+            quizContainer.innerHTML = ''; // Clear previous content
+
+            questions.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.classList.add('question');
+                questionDiv.innerHTML = `<h3>${q.question}</h3>`;
+
+                const optionsDiv = document.createElement('div');
+                optionsDiv.classList.add('options');
+
+                q.options.forEach((option) => {
+                    const button = document.createElement('button');
+                    button.textContent = option.answer;
+                    button.onclick = () => checkAnswer(button, option.correct);
+                    optionsDiv.appendChild(button);
+                });
+
+                questionDiv.appendChild(optionsDiv);
+                quizContainer.appendChild(questionDiv);
+            });
+        }
+
+        // Function to check answer
         function checkAnswer(button, isCorrect) {
-            // Disable all buttons after selecting
+            // Disable all buttons in the same question
             const buttons = button.parentElement.querySelectorAll('button');
             buttons.forEach(btn => btn.disabled = true);
 
@@ -98,12 +208,15 @@
                 button.classList.add('incorrect');
                 // Highlight the correct answer
                 buttons.forEach(btn => {
-                    if (btn.textContent.includes("client-side")) {
+                    if (btn.textContent === button.parentElement.querySelector('button.correct')?.textContent) {
                         btn.classList.add('correct');
                     }
                 });
             }
         }
+
+        // Initialize the quiz
+        renderQuiz();
     </script>
 
 </body>
