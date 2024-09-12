@@ -54,7 +54,7 @@
         }
 
         .question input[type="radio"] {
-            margin-right: 10px;
+            display: none;
         }
 
         .correct {
@@ -182,8 +182,8 @@
                 questionDiv.innerHTML = `
                     <h3>${q.question}</h3>
                     ${q.options.map((option, i) => `
-                        <label for="q${index}_opt${i}">
-                            <input type="radio" name="q${index}" id="q${index}_opt${i}" value="${i}">
+                        <label>
+                            <input type="radio" name="q${index}" value="${i}">
                             ${option.text}
                         </label>
                     `).join('')}
