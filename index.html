@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ServiceNow Quiz Tool</title>
+    <title>ServiceNow CSA Quiz</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -57,10 +57,9 @@
             margin-right: 10px;
         }
 
-        .submit-btn {
-            display: block;
-            width: 100%;
-            padding: 15px;
+        .submit-btn, .nav-btn {
+            display: inline-block;
+            padding: 10px 20px;
             background-color: #007bff;
             color: white;
             border: none;
@@ -71,7 +70,7 @@
             transition: background-color 0.3s ease;
         }
 
-        .submit-btn:hover {
+        .submit-btn:hover, .nav-btn:hover {
             background-color: #0056b3;
         }
 
@@ -102,103 +101,120 @@
             background-color: #fff3cd;
             border-color: #ffeeba;
         }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .hidden {
+            display: none;
+        }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <h1>ServiceNow Quiz</h1>
+        <h1>ServiceNow CSA Quiz</h1>
         <form id="quizForm">
-
-            <div class="question" data-correct="c">
-                <h3>1. What does the "Client" option on a UI Action indicate?</h3>
-                <label for="q1a"><input type="radio" name="q1" id="q1a" value="a"> a) The action will execute server-side code.</label>
-                <label for="q1b"><input type="radio" name="q1" id="q1b" value="b"> b) The action will run a business rule before performing.</label>
-                <label for="q1c"><input type="radio" name="q1" id="q1c" value="c"> c) The action will run on the client-side, in the user's browser.</label>
-                <label for="q1d"><input type="radio" name="q1" id="q1d" value="d"> d) The action will execute immediately after saving the record.</label>
-                <div class="feedback"></div>
-            </div>
-
-            <div class="question" data-correct="c">
-                <h3>2. What is a Transform Map used for in ServiceNow?</h3>
-                <label for="q2a"><input type="radio" name="q2" id="q2a" value="a"> a) It schedules data imports from external sources.</label>
-                <label for="q2b"><input type="radio" name="q2" id="q2b" value="b"> b) It maps records from one ServiceNow instance to another.</label>
-                <label for="q2c"><input type="radio" name="q2" id="q2c" value="c"> c) It defines the relationship between fields in a data import and fields in a target table.</label>
-                <label for="q2d"><input type="radio" name="q2" id="q2d" value="d"> d) It manages the real-time syncing of data between multiple tables.</label>
-                <div class="feedback"></div>
-            </div>
-
-            <div class="question" data-correct="b">
-                <h3>3. What method is most useful for debugging a Client Script in ServiceNow?</h3>
-                <label for="q3a"><input type="radio" name="q3" id="q3a" value="a"> a) Adding log messages to the script using `gs.log()`.</label>
-                <label for="q3b"><input type="radio" name="q3" id="q3b" value="b"> b) Using the JavaScript Debugger in the browser's Developer Tools.</label>
-                <label for="q3c"><input type="radio" name="q3" id="q3c" value="c"> c) Checking the email logs for errors.</label>
-                <label for="q3d"><input type="radio" name="q3" id="q3d" value="d"> d) Running the Record Producer.</label>
-                <div class="feedback"></div>
-            </div>
-
-            <div class="question" data-correct="d">
-                <h3>4. What is an Event in ServiceNow?</h3>
-                <label for="q4a"><input type="radio" name="q4" id="q4a" value="a"> a) A scheduled job that runs a script periodically.</label>
-                <label for="q4b"><input type="radio" name="q4" id="q4b" value="b"> b) A server-side function that runs every time a record is created.</label>
-                <label for="q4c"><input type="radio" name="q4" id="q4c" value="c"> c) A notification sent to users whenever an important record is modified.</label>
-                <label for="q4d"><input type="radio" name="q4" id="q4d" value="d"> d) A mechanism for generating messages when specific conditions occur.</label>
-                <div class="feedback"></div>
-            </div>
-
-            <div class="question" data-correct="c">
-                <h3>5. What is the main purpose of an SLA in ServiceNow?</h3>
-                <label for="q5a"><input type="radio" name="q5" id="q5a" value="a"> a) To track the total number of requests submitted by a user.</label>
-                <label for="q5b"><input type="radio" name="q5" id="q5b" value="b"> b) To ensure that the system is running efficiently.</label>
-                <label for="q5c"><input type="radio" name="q5" id="q5c" value="c"> c) To ensure that the agreed service levels are met and tracked.</label>
-                <label for="q5d"><input type="radio" name="q5" id="q5d" value="d"> d) To monitor performance of the ServiceNow instance.</label>
-                <div class="feedback"></div>
-            </div>
-
-            <button type="button" class="submit-btn" onclick="submitQuiz()">Submit</button>
+            <!-- Questions will be dynamically injected here -->
         </form>
+
+        <div class="navigation">
+            <button type="button" class="nav-btn" id="prevBtn" onclick="changePage(-1)">Previous</button>
+            <button type="button" class="nav-btn" id="nextBtn" onclick="changePage(1)">Next</button>
+        </div>
+
+        <button type="button" class="submit-btn hidden" id="submitBtn" onclick="submitQuiz()">Submit Quiz</button>
     </div>
 
     <script>
-        function submitQuiz() {
-            const questions = document.querySelectorAll('.question');
+        const questions = [
+            { question: "1. What does the 'Client' option on a UI Action indicate?", options: ["The action will execute server-side code.", "The action will run a business rule before performing.", "The action will run on the client-side, in the user's browser.", "The action will execute immediately after saving the record."], correct: "2" },
+            { question: "2. What is a Transform Map used for in ServiceNow?", options: ["It schedules data imports from external sources.", "It maps records from one ServiceNow instance to another.", "It defines the relationship between fields in a data import and fields in a target table.", "It manages the real-time syncing of data between multiple tables."], correct: "2" },
+            { question: "3. What method is most useful for debugging a Client Script in ServiceNow?", options: ["Adding log messages to the script using `gs.log()`.", "Using the JavaScript Debugger in the browser's Developer Tools.", "Checking the email logs for errors.", "Running the Record Producer."], correct: "1" },
+            { question: "4. What is an Event in ServiceNow?", options: ["A scheduled job that runs a script periodically.", "A server-side function that runs every time a record is created.", "A notification sent to users whenever an important record is modified.", "A mechanism for generating messages when specific conditions occur."], correct: "3" },
+            { question: "5. What is the main purpose of an SLA in ServiceNow?", options: ["To track the total number of requests submitted by a user.", "To ensure that the system is running efficiently.", "To ensure that the agreed service levels are met and tracked.", "To monitor performance of the ServiceNow instance."], correct: "2" },
+            // Add more questions here (30 total)
+            { question: "6. What does a Data Policy do in ServiceNow?", options: ["It controls the field's visibility in the form.", "It validates the data entered into a field.", "It enforces rules to ensure consistency of data across the application.", "It restricts access to the records based on user roles."], correct: "2" },
+            { question: "7. What is the use of GlideRecord in ServiceNow?", options: ["It is used to execute SQL queries on the database.", "It is a server-side object used to perform operations on a database table.", "It is used to handle client-side operations.", "It is used to manage workflows."], correct: "1" },
+            { question: "8. What is the purpose of a UI Policy?", options: ["To change field values on a form.", "To dynamically change the form's appearance or field behavior.", "To automate form submission.", "To create client-side rules for validating data."], correct: "1" },
+            { question: "9. How do you add a new field to a ServiceNow form?", options: ["Through a business rule.", "By customizing the form layout.", "By creating a UI action.", "By using a dictionary entry."], correct: "3" },
+            { question: "10. What are ACLs used for in ServiceNow?", options: ["To manage access to records in tables.", "To automate form submission.", "To enforce UI Policies.", "To log errors in the system."], correct: "0" },
+            // More difficult questions to cover all 30 questions for the quiz
+            // ...
+        ];
 
-            questions.forEach((question) => {
-                const selectedAnswer = question.querySelector('input[type="radio"]:checked');
-                const correctAnswer = question.getAttribute('data-correct');
-                const feedback = question.querySelector('.feedback');
-                const labels = question.querySelectorAll('label');
+        let currentPage = 0;
+        const questionsPerPage = 5;
+        let answers = {};
 
-                // Reset styles
-                labels.forEach(label => {
-                    label.classList.remove('highlight');
-                });
+        // Function to render the questions for the current page
+        function renderPage() {
+            const quizForm = document.getElementById("quizForm");
+            quizForm.innerHTML = '';
 
+            // Determine which questions to show on the current page
+            const start = currentPage * questionsPerPage;
+            const end = start + questionsPerPage;
+            const pageQuestions = questions.slice(start, end);
+
+            // Loop through questions for the current page and display them
+            pageQuestions.forEach((q, index) => {
+                const questionIndex = start + index; // Global question index
+                const questionDiv = document.createElement("div");
+                questionDiv.classList.add("question");
+                questionDiv.innerHTML = `
+                    <h3>${q.question}</h3>
+                    ${q.options.map((option, i) => `
+                        <label>
+                            <input type="radio" name="q${questionIndex}" value="${i}" ${answers[`q${questionIndex}`] === String(i) ? 'checked' : ''}>
+                            ${option}
+                        </label>
+                    `).join('')}
+                    <div class="feedback"></div>
+                `;
+                quizForm.appendChild(questionDiv);
+            });
+
+            // Update navigation buttons
+            document.getElementById("prevBtn").style.display = currentPage === 0 ? "none" : "inline-block";
+            document.getElementById("nextBtn").style.display = currentPage === Math.ceil(questions.length / questionsPerPage) - 1 ? "none" : "inline-block";
+            document.getElementById("submitBtn").classList.toggle("hidden", currentPage !== Math.ceil(questions.length / questionsPerPage) - 1);
+        }
+
+        // Function to handle page changes
+        function changePage(direction) {
+            // Save current answers
+            const currentQuestions = document.querySelectorAll(".question");
+            currentQuestions.forEach((q, index) => {
+                const questionIndex = currentPage * questionsPerPage + index;
+                const selectedAnswer = q.querySelector('input[type="radio"]:checked');
                 if (selectedAnswer) {
-                    const userAnswer = selectedAnswer.value;
-                    if (userAnswer === correctAnswer) {
-                        feedback.textContent = "Correct!";
-                        feedback.className = "feedback correct";
-                        selectedAnswer.parentElement.classList.add('highlight'); // highlight correct answer
-                    } else {
-                        feedback.textContent = `Incorrect! The correct answer is ${correctAnswer}.`;
-                        feedback.className = "feedback incorrect";
-
-                        // Highlight correct answer
-                        labels.forEach(label => {
-                            if (label.querySelector('input').value === correctAnswer) {
-                                label.classList.add('show-correct');
-                            }
-                        });
-                    }
-                    feedback.style.display = 'block';
-                } else {
-                    feedback.textContent = "Please select an answer!";
-                    feedback.className = "feedback incorrect";
-                    feedback.style.display = 'block';
+                    answers[`q${questionIndex}`] = selectedAnswer.value;
                 }
             });
+
+            // Change page
+            currentPage += direction;
+            renderPage();
         }
+
+        // Function to submit the quiz
+        function submitQuiz() {
+            let score = 0;
+            Object.keys(answers).forEach((key, index) => {
+                const correctAnswer = questions[index].correct;
+                if (answers[key] === correctAnswer) {
+                    score++;
+                }
+            });
+
+            alert(`You scored ${score} out of ${questions.length}!`);
+        }
+
+        // Render the first page on load
+        renderPage();
     </script>
 
 </body>
