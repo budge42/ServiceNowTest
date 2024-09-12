@@ -289,7 +289,188 @@
         { answer: "incident", correct: true },
         { answer: "task_incident", correct: false }
     ]
+},
+            {
+    question: "21. What does the 'coalesce' field indicate during a data import?",
+    options: [
+        { answer: "It ensures that the import will fail if a duplicate is found.", correct: false },
+        { answer: "It ensures that the import will update existing records if a match is found.", correct: true },
+        { answer: "It prevents importing if there are any data mismatches.", correct: false },
+        { answer: "It ensures that no duplicate records are created during the import.", correct: false }
+    ]
+},
+{
+    question: "22. What is the purpose of the 'GlideAjax' API in ServiceNow?",
+    options: [
+        { answer: "To perform server-side logic and send data to the client asynchronously.", correct: true },
+        { answer: "To call a client-side script from the server.", correct: false },
+        { answer: "To enforce security constraints on scripts.", correct: false },
+        { answer: "To load form data for reporting purposes.", correct: false }
+    ]
+},
+{
+    question: "23. What does the 'setWorkflow' function in a business rule do?",
+    options: [
+        { answer: "It determines if workflows should be triggered when the record is updated.", correct: true },
+        { answer: "It sets the workflow priority.", correct: false },
+        { answer: "It enables or disables UI policies on the form.", correct: false },
+        { answer: "It ensures that workflows are always skipped.", correct: false }
+    ]
+},
+{
+    question: "24. Which of the following is a best practice for creating a custom table in ServiceNow?",
+    options: [
+        { answer: "Using the Task table as the parent table for custom records.", correct: true },
+        { answer: "Avoiding inheritance from any existing tables.", correct: false },
+        { answer: "Always creating the table as standalone.", correct: false },
+        { answer: "Duplicating existing tables to retain structure.", correct: false }
+    ]
+},
+{
+    question: "25. What is the primary purpose of a 'Record Producer' in ServiceNow?",
+    options: [
+        { answer: "To create a new record in a database table.", correct: true },
+        { answer: "To generate reports based on incident data.", correct: false },
+        { answer: "To send notifications to users based on workflows.", correct: false },
+        { answer: "To dynamically create users in the ServiceNow system.", correct: false }
+    ]
+},
+{
+    question: "26. How does ServiceNow determine which field to display in reference fields?",
+    options: [
+        { answer: "By using the field marked as 'Primary' in the table.", correct: false },
+        { answer: "By using the Display Field set in the dictionary entry for the referenced table.", correct: true },
+        { answer: "By using the first field created in the table.", correct: false },
+        { answer: "By manually setting the display values in the reference table.", correct: false }
+    ]
+},
+{
+    question: "27. What is the role of the 'Dictionary Override' in ServiceNow?",
+    options: [
+        { answer: "It allows customization of fields inherited from extended tables.", correct: true },
+        { answer: "It overrides the default UI Policy for a form.", correct: false },
+        { answer: "It prevents dictionary entries from being deleted.", correct: false },
+        { answer: "It ensures that no changes are made to a table.", correct: false }
+    ]
+},
+{
+    question: "28. What does the 'gs.addInfoMessage' function do in ServiceNow?",
+    options: [
+        { answer: "It logs information to the system log.", correct: false },
+        { answer: "It displays a message at the top of the current form or list.", correct: true },
+        { answer: "It sends an email to the system admin.", correct: false },
+        { answer: "It triggers a new workflow on the record.", correct: false }
+    ]
+},
+{
+    question: "29. How are import sets used in ServiceNow?",
+    options: [
+        { answer: "To manage security roles within ServiceNow.", correct: false },
+        { answer: "To import data from external sources into ServiceNow tables.", correct: true },
+        { answer: "To automatically back up records from the CMDB.", correct: false },
+        { answer: "To create database indexes for faster query performance.", correct: false }
+    ]
+},
+{
+    question: "30. Which of the following best describes a 'CMDB Baseline' in ServiceNow?",
+    options: [
+        { answer: "A snapshot of the CMDB data at a given point in time.", correct: true },
+        { answer: "A process to delete obsolete CI records from the CMDB.", correct: false },
+        { answer: "A scheduled job to audit the CMDB.", correct: false },
+        { answer: "A method to bulk update CI records in the CMDB.", correct: false }
+    ]
+},
+{
+    question: "31. What does the 'Workflow Editor' in ServiceNow allow users to do?",
+    options: [
+        { answer: "Manually create ACLs for data security.", correct: false },
+        { answer: "Design and automate multi-step processes.", correct: true },
+        { answer: "Create user interfaces for custom applications.", correct: false },
+        { answer: "Schedule jobs for background data imports.", correct: false }
+    ]
+},
+{
+    question: "32. What is the purpose of the 'Service Level Agreement' (SLA) Definitions module?",
+    options: [
+        { answer: "To define and monitor service level agreements for tasks.", correct: true },
+        { answer: "To define workflows for custom applications.", correct: false },
+        { answer: "To define access control rules for records.", correct: false },
+        { answer: "To configure notifications for incidents.", correct: false }
+    ]
+},
+{
+    question: "33. What is the purpose of 'Script Actions' in ServiceNow?",
+    options: [
+        { answer: "To run server-side scripts triggered by events.", correct: true },
+        { answer: "To create client-side logic that runs on form loads.", correct: false },
+        { answer: "To automate form field updates.", correct: false },
+        { answer: "To enforce security policies on table data.", correct: false }
+    ]
+},
+{
+    question: "34. What does 'dot-walking' allow you to do in ServiceNow?",
+    options: [
+        { answer: "Access related record data from a reference field.", correct: true },
+        { answer: "Add a user to multiple roles simultaneously.", correct: false },
+        { answer: "Manage hierarchical workflows for incidents.", correct: false },
+        { answer: "Create database views across tables.", correct: false }
+    ]
+},
+{
+    question: "35. What is the role of the 'Update Set' in ServiceNow?",
+    options: [
+        { answer: "To track and move configuration changes between instances.", correct: true },
+        { answer: "To back up data from the CMDB.", correct: false },
+        { answer: "To import incident data from external systems.", correct: false },
+        { answer: "To manage user permissions for accessing records.", correct: false }
+    ]
+},
+{
+    question: "36. What does 'Table Inheritance' allow in ServiceNow?",
+    options: [
+        { answer: "It allows fields from a parent table to be available on a child table.", correct: true },
+        { answer: "It enables records to be automatically imported from external databases.", correct: false },
+        { answer: "It enforces security rules on a parent table.", correct: false },
+        { answer: "It prevents the creation of custom fields on child tables.", correct: false }
+    ]
+},
+{
+    question: "37. What is the purpose of 'Audit Logs' in ServiceNow?",
+    options: [
+        { answer: "To track changes made to records in the system.", correct: true },
+        { answer: "To schedule jobs for database backups.", correct: false },
+        { answer: "To manage client-side scripts for debugging.", correct: false },
+        { answer: "To enforce security rules on incidents.", correct: false }
+    ]
+},
+{
+    question: "38. What is the purpose of 'Reference Qualifiers' in ServiceNow?",
+    options: [
+        { answer: "To filter which records appear in a reference field.", correct: true },
+        { answer: "To validate data before it is saved.", correct: false },
+        { answer: "To enforce mandatory fields on forms.", correct: false },
+        { answer: "To update record data during imports.", correct: false }
+    ]
+},
+{
+    question: "39. What is 'Business Service Mapping' in ServiceNow?",
+    options: [
+        { answer: "It is a way to map relationships between CIs and services in the CMDB.", correct: true },
+        { answer: "It maps users to services in the system.", correct: false },
+        { answer: "It manages the approval flow for incidents.", correct: false },
+        { answer: "It creates database indexes for performance.", correct: false }
+    ]
+},
+{
+    question: "40. Which of the following best describes 'GlideSystem' in ServiceNow?",
+    options: [
+        { answer: "A built-in API for server-side scripting in ServiceNow.", correct: true },
+        { answer: "A system for managing scheduled jobs.", correct: false },
+        { answer: "A module for importing external data.", correct: false },
+        { answer: "A process to export records to external systems.", correct: false }
+    ]
 }
+
 
         ];
 
