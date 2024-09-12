@@ -28,32 +28,7 @@
             color: #007bff;
         }
 
-        .section-list, .nav-btns {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .section-list button, .nav-btns button {
-            margin: 10px;
-            padding: 10px 20px;
-            font-size: 1.1em;
-            cursor: pointer;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-        }
-
-        .section-list button:hover, .nav-btns button:hover {
-            background-color: #0056b3;
-        }
-
-        .question {
-            margin: 20px 0;
-        }
-
-        .question h3 {
+        h3 {
             font-size: 1.2em;
             margin-bottom: 10px;
             color: #333;
@@ -88,46 +63,79 @@
             color: #721c24;
         }
 
+        .nav-btns {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .nav-btns button {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 1.1em;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .nav-btns button:hover {
+            background-color: #0056b3;
+        }
+
         .hidden {
             display: none;
+        }
+
+        .section-button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+            text-align: left;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .section-button:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <h1>ServiceNow Quiz</h1>
+        <h1 id="title">ServiceNow Quiz</h1>
         
-        <!-- Section List -->
-        <div id="sectionList" class="section-list">
-            <button onclick="startQuiz('platform')">1 - Platform Overview and Navigation</button>
-            <button onclick="startQuiz('instance')">2 - Instance Configuration</button>
-            <button onclick="startQuiz('applications')">3 - Configuring Applications for Collaboration</button>
-            <button onclick="startQuiz('selfService')">4 - Self Service & Automation</button>
-            <button onclick="startQuiz('database')">5 - Database Management</button>
-            <button onclick="startQuiz('dataMigration')">6 - Data Migration and Integration</button>
+        <div id="homepage">
+            <button class="section-button" onclick="openSection('platformOverview')">1 - Platform Overview and Navigation</button>
+            <button class="section-button" onclick="openSection('instanceConfig')">2 - Instance Configuration</button>
+            <button class="section-button" onclick="openSection('appCollab')">3 - Configuring Applications for Collaboration</button>
+            <button class="section-button" onclick="openSection('selfService')">4 - Self Service & Automation</button>
+            <button class="section-button" onclick="openSection('dbManagement')">5 - Database Management</button>
+            <button class="section-button" onclick="openSection('dataMigration')">6 - Data Migration and Integration</button>
         </div>
-        
-        <!-- Quiz Content -->
-        <div id="quizContent" class="hidden">
-            <div id="quiz"></div>
-            <div class="nav-btns">
-                <button id="prevBtn" class="hidden" onclick="changePage(-1)">Previous</button>
-                <button id="nextBtn" onclick="changePage(1)">Next</button>
-            </div>
+
+        <div id="quiz" class="hidden"></div>
+
+        <div class="nav-btns hidden">
+            <button id="backBtn" class="hidden" onclick="goBack()">Back</button>
+            <button id="prevBtn" class="hidden" onclick="changePage(-1)">Previous</button>
+            <button id="nextBtn" class="hidden" onclick="changePage(1)">Next</button>
         </div>
     </div>
 
     <script>
-        const questionsPerPage = 5;
-        let currentPage = 0;
-        let currentSectionQuestions = [];
-
-        // Sample questions, categorized into sections
         const sections = {
-            platform: [
+            platformOverview: [
                 {
-                    question: "1. What does the 'Client' option on a UI Action indicate?",
+                    question: "What does the 'Client' option on a UI Action indicate?",
                     options: [
                         { answer: "The action will execute server-side code.", correct: false },
                         { answer: "The action will run a business rule before performing.", correct: false },
@@ -135,87 +143,88 @@
                         { answer: "The action will execute immediately after saving the record.", correct: false }
                     ]
                 },
+                // Add more questions in this section
+            ],
+            instanceConfig: [
                 {
-                    question: "2. What is the Transform Map used for?",
+                    question: "What is a Transform Map used for in ServiceNow?",
                     options: [
                         { answer: "It schedules data imports from external sources.", correct: false },
                         { answer: "It maps records from one ServiceNow instance to another.", correct: false },
                         { answer: "It defines the relationship between fields in a data import and fields in a target table.", correct: true },
                         { answer: "It manages the real-time syncing of data between multiple tables.", correct: false }
                     ]
-                }
+                },
+                // Add more questions in this section
             ],
-            instance: [
+            appCollab: [
                 {
-                    question: "3. What method is most useful for debugging a Client Script in ServiceNow?",
+                    question: "What method is most useful for debugging a Client Script in ServiceNow?",
                     options: [
-                        { answer: "Adding log messages to the script using `gs.log()`.", correct: false },
+                        { answer: "Adding log messages to the script using gs.log().", correct: false },
                         { answer: "Using the JavaScript Debugger in the browser's Developer Tools.", correct: true },
                         { answer: "Checking the email logs for errors.", correct: false },
                         { answer: "Running the Record Producer.", correct: false }
                     ]
-                }
+                },
+                // Add more questions in this section
             ],
-            applications: [
+            selfService: [
                 {
-                    question: "4. What is an Event in ServiceNow?",
+                    question: "What is an Event in ServiceNow?",
                     options: [
                         { answer: "A scheduled job that runs a script periodically.", correct: false },
                         { answer: "A server-side function that runs every time a record is created.", correct: false },
                         { answer: "A notification sent to users whenever an important record is modified.", correct: false },
                         { answer: "A mechanism for generating messages when specific conditions occur.", correct: true }
                     ]
-                }
+                },
+                // Add more questions in this section
             ],
-            selfService: [
+            dbManagement: [
                 {
-                    question: "5. What is the main purpose of an SLA in ServiceNow?",
+                    question: "What is the main purpose of an SLA in ServiceNow?",
                     options: [
                         { answer: "To track the total number of requests submitted by a user.", correct: false },
                         { answer: "To ensure that the system is running efficiently.", correct: false },
                         { answer: "To ensure that the agreed service levels are met and tracked.", correct: true },
                         { answer: "To monitor performance of the ServiceNow instance.", correct: false }
                     ]
-                }
+                },
+                // Add more questions in this section
             ],
-            database: [
+            dataMigration: [
                 {
-                    question: "6. What does a Data Policy do in ServiceNow?",
+                    question: "What does a Data Policy do in ServiceNow?",
                     options: [
                         { answer: "It controls the field's visibility in the form.", correct: false },
                         { answer: "It validates the data entered into a field.", correct: false },
                         { answer: "It enforces rules to ensure consistency of data across the application.", correct: true },
                         { answer: "It restricts access to the records based on user roles.", correct: false }
                     ]
-                }
-            ],
-            dataMigration: [
-                {
-                    question: "7. What is the use of GlideRecord in ServiceNow?",
-                    options: [
-                        { answer: "It is used to execute SQL queries on the database.", correct: false },
-                        { answer: "It is a server-side object used to perform operations on a database table.", correct: true },
-                        { answer: "It is used to handle client-side operations.", correct: false },
-                        { answer: "It is used to manage workflows.", correct: false }
-                    ]
-                }
+                },
+                // Add more questions in this section
             ]
         };
+
+        const questionsPerPage = 5;
+        let currentPage = 0;
+        let currentSection = '';
 
         // Function to render quiz
         function renderQuiz() {
             const quizContainer = document.getElementById('quiz');
             quizContainer.innerHTML = ''; // Clear previous content
 
-            // Get questions for the current page
+            const sectionQuestions = sections[currentSection];
             const start = currentPage * questionsPerPage;
-            const end = start + questionsPerPage;
-            const pageQuestions = currentSectionQuestions.slice(start, end);
+            const end = Math.min(start + questionsPerPage, sectionQuestions.length);
+            const pageQuestions = sectionQuestions.slice(start, end);
 
             pageQuestions.forEach((q, index) => {
                 const questionDiv = document.createElement('div');
                 questionDiv.classList.add('question');
-                questionDiv.innerHTML = `<h3>${q.question}</h3>`;
+                questionDiv.innerHTML = `<h3>${start + index + 1}. ${q.question}</h3>`;
 
                 const optionsDiv = document.createElement('div');
                 optionsDiv.classList.add('options');
@@ -231,9 +240,9 @@
                 quizContainer.appendChild(questionDiv);
             });
 
-            // Handle previous/next buttons visibility
             document.getElementById('prevBtn').classList.toggle('hidden', currentPage === 0);
-            document.getElementById('nextBtn').classList.toggle('hidden', end >= currentSectionQuestions.length);
+            document.getElementById('nextBtn').classList.toggle('hidden', end >= sectionQuestions.length);
+            document.getElementById('backBtn').classList.remove('hidden');
         }
 
         // Function to check answer
@@ -259,17 +268,26 @@
             renderQuiz();
         }
 
-        // Function to start quiz based on section
-        function startQuiz(section) {
-            currentSectionQuestions = sections[section]; // Set the questions for the selected section
-            currentPage = 0; // Reset to the first page
-
-            // Hide section list and show quiz content
-            document.getElementById('sectionList').classList.add('hidden');
-            document.getElementById('quizContent').classList.remove('hidden');
-
+        // Function to open a section
+        function openSection(section) {
+            currentSection = section;
+            currentPage = 0;
+            document.getElementById('homepage').classList.add('hidden');
+            document.getElementById('quiz').classList.remove('hidden');
+            document.querySelector('.nav-btns').classList.remove('hidden');
+            document.getElementById('title').textContent = `Quiz: ${section.replace(/([A-Z])/g, ' $1')}`;
             renderQuiz();
         }
+
+        // Function to go back to the homepage
+        function goBack() {
+            document.getElementById('homepage').classList.remove('hidden');
+            document.getElementById('quiz').classList.add('hidden');
+            document.querySelector('.nav-btns').classList.add('hidden');
+            document.getElementById('title').textContent = 'ServiceNow Quiz';
+        }
+
+        // Initialize the quiz
     </script>
 
 </body>
