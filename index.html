@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ServiceNow CSA Quiz</title>
+    <title>ServiceNow Quiz - Test</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -38,33 +38,32 @@
             color: #333;
         }
 
-        .question label {
+        .options button {
             display: block;
+            width: 100%;
             padding: 10px;
-            border: 1px solid #ddd;
             margin-bottom: 10px;
+            font-size: 1.1em;
+            border: 2px solid #ddd;
             border-radius: 5px;
-            background-color: #f9f9f9;
-            transition: background-color 0.3s ease;
             cursor: pointer;
+            transition: background-color 0.3s ease;
         }
 
-        .question label:hover {
+        .options button:hover {
             background-color: #f1f1f1;
-        }
-
-        .question input[type="radio"] {
-            margin-right: 10px; /* Make the radio buttons visible */
         }
 
         .correct {
             background-color: #d4edda;
             border-color: #28a745;
+            color: #155724;
         }
 
         .incorrect {
             background-color: #f8d7da;
             border-color: #dc3545;
+            color: #721c24;
         }
 
     </style>
@@ -72,151 +71,37 @@
 <body>
 
     <div class="container">
-        <h1>ServiceNow CSA Quiz</h1>
-        <form id="quizForm">
-            <!-- Questions will be dynamically injected here -->
-        </form>
+        <h1>ServiceNow Quiz - Test</h1>
+        <div class="question">
+            <h3>1. What does the 'Client' option on a UI Action indicate?</h3>
+            <div class="options">
+                <button onclick="checkAnswer(this, false)">The action will execute server-side code.</button>
+                <button onclick="checkAnswer(this, false)">The action will run a business rule before performing.</button>
+                <button onclick="checkAnswer(this, true)">The action will run on the client-side, in the user's browser.</button>
+                <button onclick="checkAnswer(this, false)">The action will execute immediately after saving the record.</button>
+            </div>
+        </div>
     </div>
 
     <script>
-        const questions = [
-            { 
-                question: "1. What does the 'Client' option on a UI Action indicate?", 
-                options: [
-                    { text: "The action will execute server-side code.", correct: false },
-                    { text: "The action will run a business rule before performing.", correct: false },
-                    { text: "The action will run on the client-side, in the user's browser.", correct: true },
-                    { text: "The action will execute immediately after saving the record.", correct: false }
-                ]
-            },
-            { 
-                question: "2. What is a Transform Map used for in ServiceNow?", 
-                options: [
-                    { text: "It schedules data imports from external sources.", correct: false },
-                    { text: "It maps records from one ServiceNow instance to another.", correct: false },
-                    { text: "It defines the relationship between fields in a data import and fields in a target table.", correct: true },
-                    { text: "It manages the real-time syncing of data between multiple tables.", correct: false }
-                ]
-            },
-            { 
-                question: "3. What method is most useful for debugging a Client Script in ServiceNow?", 
-                options: [
-                    { text: "Adding log messages to the script using `gs.log()`.", correct: false },
-                    { text: "Using the JavaScript Debugger in the browser's Developer Tools.", correct: true },
-                    { text: "Checking the email logs for errors.", correct: false },
-                    { text: "Running the Record Producer.", correct: false }
-                ]
-            },
-            { 
-                question: "4. What is an Event in ServiceNow?", 
-                options: [
-                    { text: "A scheduled job that runs a script periodically.", correct: false },
-                    { text: "A server-side function that runs every time a record is created.", correct: false },
-                    { text: "A notification sent to users whenever an important record is modified.", correct: false },
-                    { text: "A mechanism for generating messages when specific conditions occur.", correct: true }
-                ]
-            },
-            { 
-                question: "5. What is the main purpose of an SLA in ServiceNow?", 
-                options: [
-                    { text: "To track the total number of requests submitted by a user.", correct: false },
-                    { text: "To ensure that the system is running efficiently.", correct: false },
-                    { text: "To ensure that the agreed service levels are met and tracked.", correct: true },
-                    { text: "To monitor performance of the ServiceNow instance.", correct: false }
-                ]
-            },
-            { 
-                question: "6. What does a Data Policy do in ServiceNow?", 
-                options: [
-                    { text: "It controls the field's visibility in the form.", correct: false },
-                    { text: "It validates the data entered into a field.", correct: false },
-                    { text: "It enforces rules to ensure consistency of data across the application.", correct: true },
-                    { text: "It restricts access to the records based on user roles.", correct: false }
-                ]
-            },
-            { 
-                question: "7. What is the use of GlideRecord in ServiceNow?", 
-                options: [
-                    { text: "It is used to execute SQL queries on the database.", correct: false },
-                    { text: "It is a server-side object used to perform operations on a database table.", correct: true },
-                    { text: "It is used to handle client-side operations.", correct: false },
-                    { text: "It is used to manage workflows.", correct: false }
-                ]
-            },
-            { 
-                question: "8. What is the purpose of a UI Policy?", 
-                options: [
-                    { text: "To change field values on a form.", correct: false },
-                    { text: "To dynamically change the form's appearance or field behavior.", correct: true },
-                    { text: "To automate form submission.", correct: false },
-                    { text: "To create client-side rules for validating data.", correct: false }
-                ]
-            },
-            { 
-                question: "9. How do you add a new field to a ServiceNow form?", 
-                options: [
-                    { text: "Through a business rule.", correct: false },
-                    { text: "By customizing the form layout.", correct: false },
-                    { text: "By creating a UI action.", correct: false },
-                    { text: "By using a dictionary entry.", correct: true }
-                ]
-            },
-            { 
-                question: "10. What are ACLs used for in ServiceNow?", 
-                options: [
-                    { text: "To manage access to records in tables.", correct: true },
-                    { text: "To automate form submission.", correct: false },
-                    { text: "To enforce UI Policies.", correct: false },
-                    { text: "To log errors in the system.", correct: false }
-                ]
-            },
-            // Add more questions here (30 total)
-        ];
+        function checkAnswer(button, isCorrect) {
+            // Disable all buttons after selecting
+            const buttons = button.parentElement.querySelectorAll('button');
+            buttons.forEach(btn => btn.disabled = true);
 
-        const quizForm = document.getElementById("quizForm");
-
-        function renderQuiz() {
-            questions.forEach((q, index) => {
-                const questionDiv = document.createElement("div");
-                questionDiv.classList.add("question");
-                questionDiv.innerHTML = `
-                    <h3>${q.question}</h3>
-                    ${q.options.map((option, i) => `
-                        <label>
-                            <input type="radio" name="q${index}" value="${i}">
-                            ${option.text}
-                        </label>
-                    `).join('')}
-                `;
-                quizForm.appendChild(questionDiv);
-
-                // Add event listeners to the radio buttons
-                questionDiv.querySelectorAll('input[type="radio"]').forEach((input, optionIndex) => {
-                    input.addEventListener('change', function() {
-                        // Clear all labels
-                        questionDiv.querySelectorAll('label').forEach(label => {
-                            label.classList.remove('correct', 'incorrect');
-                        });
-
-                        // Check if the answer is correct
-                        if (q.options[optionIndex].correct) {
-                            this.parentElement.classList.add('correct');
-                        } else {
-                            this.parentElement.classList.add('incorrect');
-                            // Highlight the correct answer
-                            questionDiv.querySelectorAll('input[type="radio"]').forEach((opt, idx) => {
-                                if (q.options[idx].correct) {
-                                    opt.parentElement.classList.add('correct');
-                                }
-                            });
-                        }
-                    });
+            // Highlight the selected answer
+            if (isCorrect) {
+                button.classList.add('correct');
+            } else {
+                button.classList.add('incorrect');
+                // Highlight the correct answer
+                buttons.forEach(btn => {
+                    if (btn.textContent.includes("client-side")) {
+                        btn.classList.add('correct');
+                    }
                 });
-            });
+            }
         }
-
-        // Render the quiz on page load
-        renderQuiz();
     </script>
 
 </body>
