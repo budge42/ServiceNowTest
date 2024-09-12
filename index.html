@@ -28,6 +28,27 @@
             color: #007bff;
         }
 
+        .section-list, .nav-btns {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .section-list button, .nav-btns button {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 1.1em;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .section-list button:hover, .nav-btns button:hover {
+            background-color: #0056b3;
+        }
+
         .question {
             margin: 20px 0;
         }
@@ -67,1135 +88,119 @@
             color: #721c24;
         }
 
-        .nav-btns {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .nav-btns button {
-            margin: 10px;
-            padding: 10px 20px;
-            font-size: 1.1em;
-            cursor: pointer;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-        }
-
-        .nav-btns button:hover {
-            background-color: #0056b3;
-        }
-
         .hidden {
             display: none;
         }
-
     </style>
 </head>
 <body>
 
     <div class="container">
         <h1>ServiceNow Quiz</h1>
-        <div id="quiz"></div>
-        <div class="nav-btns">
-            <button id="prevBtn" class="hidden" onclick="changePage(-1)">Previous</button>
-            <button id="nextBtn" onclick="changePage(1)">Next</button>
+        
+        <!-- Section List -->
+        <div id="sectionList" class="section-list">
+            <button onclick="startQuiz('platform')">1 - Platform Overview and Navigation</button>
+            <button onclick="startQuiz('instance')">2 - Instance Configuration</button>
+            <button onclick="startQuiz('applications')">3 - Configuring Applications for Collaboration</button>
+            <button onclick="startQuiz('selfService')">4 - Self Service & Automation</button>
+            <button onclick="startQuiz('database')">5 - Database Management</button>
+            <button onclick="startQuiz('dataMigration')">6 - Data Migration and Integration</button>
+        </div>
+        
+        <!-- Quiz Content -->
+        <div id="quizContent" class="hidden">
+            <div id="quiz"></div>
+            <div class="nav-btns">
+                <button id="prevBtn" class="hidden" onclick="changePage(-1)">Previous</button>
+                <button id="nextBtn" onclick="changePage(1)">Next</button>
+            </div>
         </div>
     </div>
 
     <script>
         const questionsPerPage = 5;
         let currentPage = 0;
+        let currentSectionQuestions = [];
 
-        const questions = [
-            {
-                question: "1. What does the 'Client' option on a UI Action indicate?",
-                options: [
-                    { answer: "The action will execute server-side code.", correct: false },
-                    { answer: "The action will run a business rule before performing.", correct: false },
-                    { answer: "The action will run on the client-side, in the user's browser.", correct: true },
-                    { answer: "The action will execute immediately after saving the record.", correct: false }
-                ]
-            },
-            {
-                question: "2. What is a Transform Map used for in ServiceNow?",
-                options: [
-                    { answer: "It schedules data imports from external sources.", correct: false },
-                    { answer: "It maps records from one ServiceNow instance to another.", correct: false },
-                    { answer: "It defines the relationship between fields in a data import and fields in a target table.", correct: true },
-                    { answer: "It manages the real-time syncing of data between multiple tables.", correct: false }
-                ]
-            },
-            {
-                question: "3. What method is most useful for debugging a Client Script in ServiceNow?",
-                options: [
-                    { answer: "Adding log messages to the script using `gs.log()`.", correct: false },
-                    { answer: "Using the JavaScript Debugger in the browser's Developer Tools.", correct: true },
-                    { answer: "Checking the email logs for errors.", correct: false },
-                    { answer: "Running the Record Producer.", correct: false }
-                ]
-            },
-            {
-                question: "4. What is an Event in ServiceNow?",
-                options: [
-                    { answer: "A scheduled job that runs a script periodically.", correct: false },
-                    { answer: "A server-side function that runs every time a record is created.", correct: false },
-                    { answer: "A notification sent to users whenever an important record is modified.", correct: false },
-                    { answer: "A mechanism for generating messages when specific conditions occur.", correct: true }
-                ]
-            },
-            {
-                question: "5. What is the main purpose of an SLA in ServiceNow?",
-                options: [
-                    { answer: "To track the total number of requests submitted by a user.", correct: false },
-                    { answer: "To ensure that the system is running efficiently.", correct: false },
-                    { answer: "To ensure that the agreed service levels are met and tracked.", correct: true },
-                    { answer: "To monitor performance of the ServiceNow instance.", correct: false }
-                ]
-            },
-            {
-                question: "6. What does a Data Policy do in ServiceNow?",
-                options: [
-                    { answer: "It controls the field's visibility in the form.", correct: false },
-                    { answer: "It validates the data entered into a field.", correct: false },
-                    { answer: "It enforces rules to ensure consistency of data across the application.", correct: true },
-                    { answer: "It restricts access to the records based on user roles.", correct: false }
-                ]
-            },
-            {
-                question: "7. What is the use of GlideRecord in ServiceNow?",
-                options: [
-                    { answer: "It is used to execute SQL queries on the database.", correct: false },
-                    { answer: "It is a server-side object used to perform operations on a database table.", correct: true },
-                    { answer: "It is used to handle client-side operations.", correct: false },
-                    { answer: "It is used to manage workflows.", correct: false }
-                ]
-            },
-            {
-                question: "8. What is the purpose of a UI Policy?",
-                options: [
-                    { answer: "To change field values on a form.", correct: false },
-                    { answer: "To dynamically change the form's appearance or field behavior.", correct: true },
-                    { answer: "To automate form submission.", correct: false },
-                    { answer: "To create client-side rules for validating data.", correct: false }
-                ]
-            },
-            {
-                question: "9. How do you add a new field to a ServiceNow form?",
-                options: [
-                    { answer: "Through a business rule.", correct: false },
-                    { answer: "By customizing the form layout.", correct: false },
-                    { answer: "By creating a UI action.", correct: false },
-                    { answer: "By using a dictionary entry.", correct: true }
-                ]
-            },
-            {
-                question: "10. What are ACLs used for in ServiceNow?",
-                options: [
-                    { answer: "To manage access to records in tables.", correct: true },
-                    { answer: "To automate form submission.", correct: false },
-                    { answer: "To enforce UI Policies.", correct: false },
-                    { answer: "To log errors in the system.", correct: false }
-                ]
-            },
-            {
-    question: "11. What is a Business Rule in ServiceNow?",
-    options: [
-        { answer: "A client-side script that runs in response to form actions.", correct: false },
-        { answer: "A server-side script that runs when records are inserted, updated, or deleted.", correct: true },
-        { answer: "A rule that manages workflows.", correct: false },
-        { answer: "A script that enforces UI policies.", correct: false }
-    ]
-},
-{
-    question: "12. What is the role of a Workflow in ServiceNow?",
-    options: [
-        { answer: "To manage UI policies.", correct: false },
-        { answer: "To automate multi-step processes.", correct: true },
-        { answer: "To manage roles and permissions.", correct: false },
-        { answer: "To handle client-side form validation.", correct: false }
-    ]
-},
-{
-    question: "13. What table in ServiceNow holds SLA records?",
-    options: [
-        { answer: "incident_sla", correct: false },
-        { answer: "task_sla", correct: true },
-        { answer: "sla_definition", correct: false },
-        { answer: "task_table", correct: false }
-    ]
-},
-{
-    question: "14. What does the Service Catalog in ServiceNow provide?",
-    options: [
-        { answer: "A place for users to view system logs.", correct: false },
-        { answer: "A portal for requesting goods and services.", correct: true },
-        { answer: "A list of available SLAs.", correct: false },
-        { answer: "A tool for managing incidents.", correct: false }
-    ]
-},
-{
-    question: "15. What is the function of a UI Action in ServiceNow?",
-    options: [
-        { answer: "To validate data before form submission.", correct: false },
-        { answer: "To add buttons, links, and context menu items to forms and lists.", correct: true },
-        { answer: "To manage workflows.", correct: false },
-        { answer: "To trigger events in the system.", correct: false }
-    ]
-},
-{
-    question: "16. What is the primary use of a Script Include?",
-    options: [
-        { answer: "To include reusable server-side code.", correct: true },
-        { answer: "To handle client-side scripts.", correct: false },
-        { answer: "To validate form data.", correct: false },
-        { answer: "To manage workflow logic.", correct: false }
-    ]
-},
-{
-    question: "17. Which module in ServiceNow would you use to import data?",
-    options: [
-        { answer: "Data Load", correct: false },
-        { answer: "Import Sets", correct: true },
-        { answer: "Data Dictionary", correct: false },
-        { answer: "Service Catalog", correct: false }
-    ]
-},
-{
-    question: "18. What does the Scheduled Jobs module in ServiceNow allow you to do?",
-    options: [
-        { answer: "Manage UI Policies.", correct: false },
-        { answer: "Schedule jobs like data imports and reports.", correct: true },
-        { answer: "Schedule notifications for users.", correct: false },
-        { answer: "Run client-side scripts.", correct: false }
-    ]
-},
-{
-    question: "19. What does the CI (Configuration Item) represent in ServiceNow?",
-    options: [
-        { answer: "An item in the Service Catalog.", correct: false },
-        { answer: "A component in the CMDB that needs to be managed.", correct: true },
-        { answer: "An incident in the Incident table.", correct: false },
-        { answer: "A UI Action in ServiceNow.", correct: false }
-    ]
-},
-{
-    question: "20. Which ServiceNow table stores Incident data?",
-    options: [
-        { answer: "task_sla", correct: false },
-        { answer: "incident_sla", correct: false },
-        { answer: "incident", correct: true },
-        { answer: "task_incident", correct: false }
-    ]
-},
-            {
-    question: "21. What does the 'coalesce' field indicate during a data import?",
-    options: [
-        { answer: "It ensures that the import will fail if a duplicate is found.", correct: false },
-        { answer: "It ensures that the import will update existing records if a match is found.", correct: true },
-        { answer: "It prevents importing if there are any data mismatches.", correct: false },
-        { answer: "It ensures that no duplicate records are created during the import.", correct: false }
-    ]
-},
-{
-    question: "22. What is the purpose of the 'GlideAjax' API in ServiceNow?",
-    options: [
-        { answer: "To perform server-side logic and send data to the client asynchronously.", correct: true },
-        { answer: "To call a client-side script from the server.", correct: false },
-        { answer: "To enforce security constraints on scripts.", correct: false },
-        { answer: "To load form data for reporting purposes.", correct: false }
-    ]
-},
-{
-    question: "23. What does the 'setWorkflow' function in a business rule do?",
-    options: [
-        { answer: "It determines if workflows should be triggered when the record is updated.", correct: true },
-        { answer: "It sets the workflow priority.", correct: false },
-        { answer: "It enables or disables UI policies on the form.", correct: false },
-        { answer: "It ensures that workflows are always skipped.", correct: false }
-    ]
-},
-{
-    question: "24. Which of the following is a best practice for creating a custom table in ServiceNow?",
-    options: [
-        { answer: "Using the Task table as the parent table for custom records.", correct: true },
-        { answer: "Avoiding inheritance from any existing tables.", correct: false },
-        { answer: "Always creating the table as standalone.", correct: false },
-        { answer: "Duplicating existing tables to retain structure.", correct: false }
-    ]
-},
-{
-    question: "25. What is the primary purpose of a 'Record Producer' in ServiceNow?",
-    options: [
-        { answer: "To create a new record in a database table.", correct: true },
-        { answer: "To generate reports based on incident data.", correct: false },
-        { answer: "To send notifications to users based on workflows.", correct: false },
-        { answer: "To dynamically create users in the ServiceNow system.", correct: false }
-    ]
-},
-{
-    question: "26. How does ServiceNow determine which field to display in reference fields?",
-    options: [
-        { answer: "By using the field marked as 'Primary' in the table.", correct: false },
-        { answer: "By using the Display Field set in the dictionary entry for the referenced table.", correct: true },
-        { answer: "By using the first field created in the table.", correct: false },
-        { answer: "By manually setting the display values in the reference table.", correct: false }
-    ]
-},
-{
-    question: "27. What is the role of the 'Dictionary Override' in ServiceNow?",
-    options: [
-        { answer: "It allows customization of fields inherited from extended tables.", correct: true },
-        { answer: "It overrides the default UI Policy for a form.", correct: false },
-        { answer: "It prevents dictionary entries from being deleted.", correct: false },
-        { answer: "It ensures that no changes are made to a table.", correct: false }
-    ]
-},
-{
-    question: "28. What does the 'gs.addInfoMessage' function do in ServiceNow?",
-    options: [
-        { answer: "It logs information to the system log.", correct: false },
-        { answer: "It displays a message at the top of the current form or list.", correct: true },
-        { answer: "It sends an email to the system admin.", correct: false },
-        { answer: "It triggers a new workflow on the record.", correct: false }
-    ]
-},
-{
-    question: "29. How are import sets used in ServiceNow?",
-    options: [
-        { answer: "To manage security roles within ServiceNow.", correct: false },
-        { answer: "To import data from external sources into ServiceNow tables.", correct: true },
-        { answer: "To automatically back up records from the CMDB.", correct: false },
-        { answer: "To create database indexes for faster query performance.", correct: false }
-    ]
-},
-{
-    question: "30. Which of the following best describes a 'CMDB Baseline' in ServiceNow?",
-    options: [
-        { answer: "A snapshot of the CMDB data at a given point in time.", correct: true },
-        { answer: "A process to delete obsolete CI records from the CMDB.", correct: false },
-        { answer: "A scheduled job to audit the CMDB.", correct: false },
-        { answer: "A method to bulk update CI records in the CMDB.", correct: false }
-    ]
-},
-{
-    question: "31. What does the 'Workflow Editor' in ServiceNow allow users to do?",
-    options: [
-        { answer: "Manually create ACLs for data security.", correct: false },
-        { answer: "Design and automate multi-step processes.", correct: true },
-        { answer: "Create user interfaces for custom applications.", correct: false },
-        { answer: "Schedule jobs for background data imports.", correct: false }
-    ]
-},
-{
-    question: "32. What is the purpose of the 'Service Level Agreement' (SLA) Definitions module?",
-    options: [
-        { answer: "To define and monitor service level agreements for tasks.", correct: true },
-        { answer: "To define workflows for custom applications.", correct: false },
-        { answer: "To define access control rules for records.", correct: false },
-        { answer: "To configure notifications for incidents.", correct: false }
-    ]
-},
-{
-    question: "33. What is the purpose of 'Script Actions' in ServiceNow?",
-    options: [
-        { answer: "To run server-side scripts triggered by events.", correct: true },
-        { answer: "To create client-side logic that runs on form loads.", correct: false },
-        { answer: "To automate form field updates.", correct: false },
-        { answer: "To enforce security policies on table data.", correct: false }
-    ]
-},
-{
-    question: "34. What does 'dot-walking' allow you to do in ServiceNow?",
-    options: [
-        { answer: "Access related record data from a reference field.", correct: true },
-        { answer: "Add a user to multiple roles simultaneously.", correct: false },
-        { answer: "Manage hierarchical workflows for incidents.", correct: false },
-        { answer: "Create database views across tables.", correct: false }
-    ]
-},
-{
-    question: "35. What is the role of the 'Update Set' in ServiceNow?",
-    options: [
-        { answer: "To track and move configuration changes between instances.", correct: true },
-        { answer: "To back up data from the CMDB.", correct: false },
-        { answer: "To import incident data from external systems.", correct: false },
-        { answer: "To manage user permissions for accessing records.", correct: false }
-    ]
-},
-{
-    question: "36. What does 'Table Inheritance' allow in ServiceNow?",
-    options: [
-        { answer: "It allows fields from a parent table to be available on a child table.", correct: true },
-        { answer: "It enables records to be automatically imported from external databases.", correct: false },
-        { answer: "It enforces security rules on a parent table.", correct: false },
-        { answer: "It prevents the creation of custom fields on child tables.", correct: false }
-    ]
-},
-{
-    question: "37. What is the purpose of 'Audit Logs' in ServiceNow?",
-    options: [
-        { answer: "To track changes made to records in the system.", correct: true },
-        { answer: "To schedule jobs for database backups.", correct: false },
-        { answer: "To manage client-side scripts for debugging.", correct: false },
-        { answer: "To enforce security rules on incidents.", correct: false }
-    ]
-},
-{
-    question: "38. What is the purpose of 'Reference Qualifiers' in ServiceNow?",
-    options: [
-        { answer: "To filter which records appear in a reference field.", correct: true },
-        { answer: "To validate data before it is saved.", correct: false },
-        { answer: "To enforce mandatory fields on forms.", correct: false },
-        { answer: "To update record data during imports.", correct: false }
-    ]
-},
-{
-    question: "39. What is 'Business Service Mapping' in ServiceNow?",
-    options: [
-        { answer: "It is a way to map relationships between CIs and services in the CMDB.", correct: true },
-        { answer: "It maps users to services in the system.", correct: false },
-        { answer: "It manages the approval flow for incidents.", correct: false },
-        { answer: "It creates database indexes for performance.", correct: false }
-    ]
-},
-{
-    question: "40. Which of the following best describes 'GlideSystem' in ServiceNow?",
-    options: [
-        { answer: "A built-in API for server-side scripting in ServiceNow.", correct: true },
-        { answer: "A system for managing scheduled jobs.", correct: false },
-        { answer: "A module for importing external data.", correct: false },
-        { answer: "A process to export records to external systems.", correct: false }
-    ]
-},
-            {
-    question: "41. In ServiceNow, what is the purpose of a 'Scoped Application'?",
-    options: [
-        { answer: "To allow global access to all tables in the instance.", correct: false },
-        { answer: "To limit access to application-specific resources and prevent conflicts.", correct: true },
-        { answer: "To manage background scripts running on all applications.", correct: false },
-        { answer: "To restrict users from accessing UI actions.", correct: false }
-    ]
-},
-{
-    question: "42. What is the function of 'gs.getUser()' in ServiceNow?",
-    options: [
-        { answer: "It retrieves the current user's role.", correct: false },
-        { answer: "It retrieves the current user's session information.", correct: false },
-        { answer: "It retrieves the current user's GlideRecord object.", correct: true },
-        { answer: "It retrieves the current user's location.", correct: false }
-    ]
-},
-{
-    question: "43. What happens when a 'Catalog Item' is submitted in the Service Catalog?",
-    options: [
-        { answer: "A record is created in the Request table (sc_request).", correct: true },
-        { answer: "A user is automatically approved for the requested item.", correct: false },
-        { answer: "The item's workflow is executed and an incident is generated.", correct: false },
-        { answer: "The item is directly procured and delivered to the user.", correct: false }
-    ]
-},
-{
-    question: "44. How does the 'Approval Engine' in ServiceNow determine which approvals are needed for a request?",
-    options: [
-        { answer: "By checking the Approval Rules configured in the Request table.", correct: false },
-        { answer: "By running a script that checks the user's role in the instance.", correct: false },
-        { answer: "By using approval conditions defined in the Workflow Editor.", correct: true },
-        { answer: "By manually assigning the approval tasks to approvers.", correct: false }
-    ]
-},
-{
-    question: "45. What does a 'Data Lookup' rule do in ServiceNow?",
-    options: [
-        { answer: "It automatically populates field values based on conditions.", correct: true },
-        { answer: "It looks up data from external sources.", correct: false },
-        { answer: "It updates records in the CMDB based on user input.", correct: false },
-        { answer: "It validates data before form submission.", correct: false }
-    ]
-},
-{
-    question: "46. How do 'Scoped Applications' differ from 'Global Applications' in ServiceNow?",
-    options: [
-        { answer: "Scoped applications can only be accessed by administrators.", correct: false },
-        { answer: "Scoped applications have access to a defined set of tables, unlike global applications.", correct: true },
-        { answer: "Global applications are faster than scoped applications.", correct: false },
-        { answer: "Global applications cannot be customized, while scoped applications can.", correct: false }
-    ]
-},
-{
-    question: "47. In ServiceNow, what does the 'No-Condition' ACL (Access Control List) do?",
-    options: [
-        { answer: "It prevents any user from accessing the table or field.", correct: false },
-        { answer: "It grants access to all users regardless of their roles.", correct: false },
-        { answer: "It applies access control based on scripts and roles.", correct: true },
-        { answer: "It disables all security rules for that table or field.", correct: false }
-    ]
-},
-{
-    question: "48. How does the 'Inbound Email Action' feature work in ServiceNow?",
-    options: [
-        { answer: "It triggers server-side scripts based on incoming email content.", correct: true },
-        { answer: "It generates a new task record for every email received.", correct: false },
-        { answer: "It forwards emails to external systems for processing.", correct: false },
-        { answer: "It automatically updates user profiles based on email signatures.", correct: false }
-    ]
-},
-{
-    question: "49. Which table holds records for knowledge articles in ServiceNow?",
-    options: [
-        { answer: "sys_kb_knowledge", correct: false },
-        { answer: "kb_article", correct: true },
-        { answer: "knowledge_base", correct: false },
-        { answer: "sys_kb_article", correct: false }
-    ]
-},
-{
-    question: "50. In ServiceNow, what is the primary use of 'Scripted REST APIs'?",
-    options: [
-        { answer: "To integrate third-party services using JSON payloads.", correct: true },
-        { answer: "To enforce security policies on internal forms.", correct: false },
-        { answer: "To generate reports based on server-side data.", correct: false },
-        { answer: "To manage user access to external databases.", correct: false }
-    ]
-},
-{
-    question: "51. What does the 'Before Business Rule' in ServiceNow do?",
-    options: [
-        { answer: "It runs before a record is displayed to users.", correct: false },
-        { answer: "It executes before a record is inserted, updated, or deleted.", correct: true },
-        { answer: "It performs field validation before form submission.", correct: false },
-        { answer: "It triggers a workflow before saving a record.", correct: false }
-    ]
-},
-{
-    question: "52. How do you create a 'Report' that groups data by a specific field in ServiceNow?",
-    options: [
-        { answer: "By using the 'Group By' feature in the Report Designer.", correct: true },
-        { answer: "By adding a new filter to the Query Builder.", correct: false },
-        { answer: "By creating a dashboard and using widgets to filter the data.", correct: false },
-        { answer: "By writing a GlideRecord script to group data in the backend.", correct: false }
-    ]
-},
-{
-    question: "53. What is the primary purpose of 'Update Sets' in ServiceNow?",
-    options: [
-        { answer: "To track and move configuration changes between instances.", correct: true },
-        { answer: "To create backups of database records in ServiceNow.", correct: false },
-        { answer: "To update all the tables within a ServiceNow instance.", correct: false },
-        { answer: "To manage workflow versions in ServiceNow.", correct: false }
-    ]
-},
-{
-    question: "54. What is the function of 'gs.addErrorMessage' in ServiceNow?",
-    options: [
-        { answer: "It adds a new error to the server-side log.", correct: false },
-        { answer: "It prevents form submission if validation fails.", correct: false },
-        { answer: "It displays an error message to the user.", correct: true },
-        { answer: "It triggers an alert for system administrators.", correct: false }
-    ]
-},
-{
-    question: "55. How are 'Scheduled Jobs' in ServiceNow configured?",
-    options: [
-        { answer: "By navigating to System Scheduler > Scheduled Jobs.", correct: true },
-        { answer: "By creating a new background script and adding it to the system queue.", correct: false },
-        { answer: "By writing a new Workflow to trigger the job.", correct: false },
-        { answer: "By using the Business Rule editor to configure job times.", correct: false }
-    ]
-},
-{
-    question: "56. What is the role of a 'MID Server' in ServiceNow?",
-    options: [
-        { answer: "It handles integration with external systems and network services.", correct: true },
-        { answer: "It manages all data imports into the instance.", correct: false },
-        { answer: "It automates client-side data validation.", correct: false },
-        { answer: "It allows users to connect to external databases.", correct: false }
-    ]
-},
-{
-    question: "57. How does the 'Service Portal' differ from the regular ServiceNow interface?",
-    options: [
-        { answer: "The Service Portal provides a user-friendly interface for non-technical users.", correct: true },
-        { answer: "The Service Portal is used only for administrators and developers.", correct: false },
-        { answer: "The Service Portal runs on a separate instance from ServiceNow.", correct: false },
-        { answer: "The Service Portal is accessible only from the mobile app.", correct: false }
-    ]
-},
-{
-    question: "58. In which table are 'Update Set' records stored in ServiceNow?",
-    options: [
-        { answer: "sys_update_set", correct: true },
-        { answer: "update_task", correct: false },
-        { answer: "sys_task_update", correct: false },
-        { answer: "sys_update_task", correct: false }
-    ]
-},
-{
-    question: "59. What is the use of 'Contextual Search' in ServiceNow?",
-    options: [
-        { answer: "It helps users find relevant knowledge articles based on their current record.", correct: true },
-        { answer: "It allows users to search across multiple instances.", correct: false },
-        { answer: "It provides full-text search across all modules.", correct: false },
-        { answer: "It allows filtering of reports and dashboards.", correct: false }
-    ]
-},
-{
-    question: "60. What does 'GSLog' in ServiceNow do?",
-    options: [
-        { answer: "It logs client-side script errors to the server log.", correct: false },
-        { answer: "It logs server-side messages and script outputs.", correct: true },
-        { answer: "It logs changes made to GlideRecord objects.", correct: false },
-        { answer: "It logs user activities on forms.", correct: false }
-    ]
-},
-{
-    question: "61. What does the 'sys_user_role' table store?",
-    options: [
-        { answer: "User permissions for accessing the ServiceNow system.", correct: false },
-        { answer: "A list of all active users in the ServiceNow instance.", correct: false },
-        { answer: "The roles assigned to users for access control.", correct: true },
-        { answer: "The session information for logged-in users.", correct: false }
-    ]
-},
-{
-    question: "62. What is the purpose of 'Business Service Mapping' in ServiceNow?",
-    options: [
-        { answer: "To map relationships between configuration items (CIs) and services.", correct: true },
-        { answer: "To manage SLA agreements across incidents.", correct: false },
-        { answer: "To automate client-side script creation.", correct: false },
-        { answer: "To create audit logs of business rules.", correct: false }
-    ]
-},
-{
-    question: "63. What does 'UI Policy Action' do?",
-    options: [
-        { answer: "It allows the user to dynamically change the behavior of fields on a form.", correct: true },
-        { answer: "It triggers a workflow when a condition is met.", correct: false },
-        { answer: "It validates the data before a record is saved.", correct: false },
-        { answer: "It controls access to forms and lists.", correct: false }
-    ]
-},
-{
-    question: "64. What is the role of a 'GlideRecord' in ServiceNow?",
-    options: [
-        { answer: "It is used to create and manipulate records in a table programmatically.", correct: true },
-        { answer: "It is used to track changes to client-side scripts.", correct: false },
-        { answer: "It manages business rules and their execution.", correct: false },
-        { answer: "It defines the relationship between user roles and permissions.", correct: false }
-    ]
-},
-{
-    question: "65. What is the purpose of 'Change Management' in ServiceNow?",
-    options: [
-        { answer: "To track and manage changes made to IT infrastructure.", correct: true },
-        { answer: "To automate user role assignments.", correct: false },
-        { answer: "To manage custom workflows across departments.", correct: false },
-        { answer: "To track changes to user permissions and access.", correct: false }
-    ]
-},
-{
-    question: "66. How does a 'Data Policy' differ from a 'UI Policy' in ServiceNow?",
-    options: [
-        { answer: "Data Policies apply to all data being imported into or saved to the database, while UI Policies apply only to the form view.", correct: true },
-        { answer: "Data Policies are only applied to the client-side data entry, while UI Policies are applied to the database.", correct: false },
-        { answer: "UI Policies enforce security, while Data Policies enforce data formatting.", correct: false },
-        { answer: "Data Policies are specific to one application, while UI Policies are global.", correct: false }
-    ]
-},
-{
-    question: "67. What is a 'Table Schema' in ServiceNow?",
-    options: [
-        { answer: "A visual representation of tables, columns, and their relationships.", correct: true },
-        { answer: "A script used to automate form validation.", correct: false },
-        { answer: "A business rule that enforces data consistency.", correct: false },
-        { answer: "A scheduled job that manages database backups.", correct: false }
-    ]
-},
-{
-    question: "68. What is the role of 'SLA Breach' in ServiceNow?",
-    options: [
-        { answer: "It indicates that the time allowed for a task to be completed has passed.", correct: true },
-        { answer: "It triggers a workflow to escalate a task automatically.", correct: false },
-        { answer: "It prevents the task from being closed.", correct: false },
-        { answer: "It creates a backup of the task data.", correct: false }
-    ]
-},
-{
-    question: "69. What is 'GlideForm' used for in ServiceNow?",
-    options: [
-        { answer: "To provide client-side methods for interacting with forms.", correct: true },
-        { answer: "To enforce server-side validations.", correct: false },
-        { answer: "To schedule background scripts.", correct: false },
-        { answer: "To run reports on task performance.", correct: false }
-    ]
-},
-{
-    question: "70. What does the 'Parent Incident' field do in ServiceNow?",
-    options: [
-        { answer: "It links a child incident to a parent incident.", correct: true },
-        { answer: "It automatically escalates an incident to a higher priority.", correct: false },
-        { answer: "It tracks all users assigned to an incident.", correct: false },
-        { answer: "It schedules notifications for incident breaches.", correct: false }
-    ]
-},
-{
-    question: "71. What is the purpose of 'CMDB Health' in ServiceNow?",
-    options: [
-        { answer: "To monitor and ensure the accuracy of data within the CMDB.", correct: true },
-        { answer: "To update configuration items (CIs) in real-time.", correct: false },
-        { answer: "To manage workflows for CMDB updates.", correct: false },
-        { answer: "To track the performance of CIs across the network.", correct: false }
-    ]
-},
-{
-    question: "72. In ServiceNow, what does 'Event Management' do?",
-    options: [
-        { answer: "It processes incoming events from external monitoring tools and creates alerts or incidents.", correct: true },
-        { answer: "It triggers scheduled jobs for database maintenance.", correct: false },
-        { answer: "It enforces access control on CMDB records.", correct: false },
-        { answer: "It manages user role assignment based on tasks.", correct: false }
-    ]
-},
-{
-    question: "73. How does 'UI Action' differ from 'Business Rule' in ServiceNow?",
-    options: [
-        { answer: "UI Actions add buttons and links to forms, while Business Rules control database-level logic.", correct: true },
-        { answer: "Business Rules are always client-side, while UI Actions are server-side.", correct: false },
-        { answer: "Business Rules trigger workflows, while UI Actions automate form submission.", correct: false },
-        { answer: "UI Actions enforce table-level security, while Business Rules manage records.", correct: false }
-    ]
-},
-{
-    question: "74. What is 'glide.sys.log_level' in ServiceNow used for?",
-    options: [
-        { answer: "To control the level of logging for server-side scripts.", correct: true },
-        { answer: "To log changes to user roles and permissions.", correct: false },
-        { answer: "To log background job execution details.", correct: false },
-        { answer: "To log form submissions made by users.", correct: false }
-    ]
-},
-{
-    question: "75. What does the 'gs.getProperty' function do in ServiceNow?",
-    options: [
-        { answer: "It retrieves system properties from the property table.", correct: true },
-        { answer: "It retrieves the current user's session information.", correct: false },
-        { answer: "It retrieves the current record's ACL policies.", correct: false },
-        { answer: "It retrieves the workflow state of a task.", correct: false }
-    ]
-},
-{
-    question: "76. What does 'Custom Application Scoping' achieve in ServiceNow?",
-    options: [
-        { answer: "It isolates the data and configuration of an application to prevent conflicts with other applications.", correct: true },
-        { answer: "It allows access to global records for all scoped applications.", correct: false },
-        { answer: "It restricts user access to all tables in the system.", correct: false },
-        { answer: "It schedules background scripts to run for scoped applications.", correct: false }
-    ]
-},
-{
-    question: "77. What is the purpose of 'Client Callable Script Includes'?",
-    options: [
-        { answer: "To enable Script Includes to be called from client-side scripts using GlideAjax.", correct: true },
-        { answer: "To call server-side business rules from the client side.", correct: false },
-        { answer: "To manage script logs across different client sessions.", correct: false },
-        { answer: "To validate forms before submission from the client side.", correct: false }
-    ]
-},
-{
-    question: "78. How are 'Service Level Agreement (SLA) Definitions' triggered in ServiceNow?",
-    options: [
-        { answer: "When a task is created or updated and meets certain conditions.", correct: true },
-        { answer: "When a workflow is completed for an incident.", correct: false },
-        { answer: "When a CMDB baseline is created.", correct: false },
-        { answer: "When an approval is granted for a service request.", correct: false }
-    ]
-},
-{
-    question: "79. What does 'gs.getSession().isInteractive()' return in ServiceNow?",
-    options: [
-        { answer: "True if the user is logged in via the UI.", correct: true },
-        { answer: "True if the user is logged in via API.", correct: false },
-        { answer: "True if the session is encrypted.", correct: false },
-        { answer: "True if the session is in a background job.", correct: false }
-    ]
-},
-{
-    question: "80. What is the role of 'Workflow Versioning' in ServiceNow?",
-    options: [
-        { answer: "To track different versions of a workflow and allow rollback to previous versions.", correct: true },
-        { answer: "To allow workflows to be applied to different user roles.", correct: false },
-        { answer: "To automatically upgrade workflows during system updates.", correct: false },
-        { answer: "To monitor changes to workflows for audit purposes.", correct: false }
-    ]
-},
-            {
-    question: "81. What is the role of the 'Dictionary Entry' in ServiceNow?",
-    options: [
-        { answer: "It sets up scheduled jobs for data imports.", correct: false },
-        { answer: "It maps fields between forms and lists.", correct: false },
-        { answer: "It defines the metadata for a field, such as type and max length.", correct: true },
-        { answer: "It is used to enforce form-level validation.", correct: false }
-    ]
-},
-{
-    question: "82. How does 'GlideRecord' execute queries in ServiceNow?",
-    options: [
-        { answer: "It triggers scheduled workflows on task completion.", correct: false },
-        { answer: "It performs client-side form validation.", correct: false },
-        { answer: "It runs SQL-like queries on ServiceNow tables.", correct: true },
-        { answer: "It manages background scripts for data imports.", correct: false }
-    ]
-},
-{
-    question: "83. What is the purpose of 'Client Scripts' in ServiceNow?",
-    options: [
-        { answer: "To enforce field visibility and role-based security.", correct: false },
-        { answer: "To handle client-side events like form field changes and form submissions.", correct: true },
-        { answer: "To manage server-side logic during task updates.", correct: false },
-        { answer: "To automatically trigger business rules based on workflow conditions.", correct: false }
-    ]
-},
-{
-    question: "84. Which method is used to redirect a user to a different URL in ServiceNow Client Scripts?",
-    options: [
-        { answer: "g_navigation.open()", correct: false },
-        { answer: "g_form.redirect()", correct: false },
-        { answer: "window.location.href", correct: true },
-        { answer: "window.location", correct: false }
-    ]
-},
-{
-    question: "85. What is a 'Metric' in ServiceNow used for?",
-    options: [
-        { answer: "To automate field value changes based on conditions.", correct: false },
-        { answer: "To report on the number of active workflows.", correct: false },
-        { answer: "To measure UI policy execution times.", correct: false },
-        { answer: "To measure and track the duration between different states in a task's lifecycle.", correct: true }
-    ]
-},
-{
-    question: "86. How can 'Business Rules' be used in ServiceNow?",
-    options: [
-        { answer: "They can be used to execute server-side scripts on record insert, update, or delete.", correct: true },
-        { answer: "They manage client-side scripts triggered by form submissions.", correct: false },
-        { answer: "They trigger workflows when a user logs in.", correct: false },
-        { answer: "They are used to schedule background jobs.", correct: false }
-    ]
-},
-{
-    question: "87. What does the 'Copy Change' feature in ServiceNow do?",
-    options: [
-        { answer: "It moves all related incidents to a new change request.", correct: false },
-        { answer: "It copies an existing change request into a new change request.", correct: true },
-        { answer: "It copies a change request and reassigns it to the same task.", correct: false },
-        { answer: "It copies an update set into the target instance.", correct: false }
-    ]
-},
-{
-    question: "88. What are the 'State Transitions' used for in ServiceNow workflows?",
-    options: [
-        { answer: "To audit field changes when a state changes.", correct: false },
-        { answer: "To manage user roles for record access.", correct: false },
-        { answer: "To define the allowed states a record can transition between.", correct: true },
-        { answer: "To execute client-side form validation based on states.", correct: false }
-    ]
-},
-{
-    question: "89. What is the purpose of the 'g_scratchpad' object in ServiceNow?",
-    options: [
-        { answer: "It is used to pass data between workflows.", correct: false },
-        { answer: "It is used to pass data from server-side scripts to client-side scripts.", correct: true },
-        { answer: "It stores background script data.", correct: false },
-        { answer: "It is used to pass data between record producers.", correct: false }
-    ]
-},
-{
-    question: "90. What happens if a workflow is not published in ServiceNow?",
-    options: [
-        { answer: "The workflow can still be used, but only for admin users.", correct: false },
-        { answer: "The workflow automatically triggers once assigned to a task.", correct: false },
-        { answer: "The workflow will run in preview mode.", correct: false },
-        { answer: "The workflow cannot be used in records until it is published.", correct: true }
-    ]
-},
-{
-    question: "91. What is the purpose of 'Knowledge Blocks' in ServiceNow?",
-    options: [
-        { answer: "They automatically trigger incident creation when an article is viewed.", correct: false },
-        { answer: "They are used to audit changes to knowledge articles.", correct: false },
-        { answer: "They provide a reusable content block within knowledge articles.", correct: true },
-        { answer: "They track user views of knowledge articles.", correct: false }
-    ]
-},
-{
-    question: "92. How does 'Table Extension' work in ServiceNow?",
-    options: [
-        { answer: "It adds new fields to the existing tables in the system.", correct: false },
-        { answer: "It creates new tables based on scheduled jobs.", correct: false },
-        { answer: "It extends incident workflows to other tables.", correct: false },
-        { answer: "It allows a new table to inherit fields from a parent table.", correct: true }
-    ]
-},
-{
-    question: "93. What is 'GlideDateTime' used for in ServiceNow?",
-    options: [
-        { answer: "It handles client-side time zone calculations.", correct: false },
-        { answer: "It stores both date and time information.", correct: true },
-        { answer: "It retrieves server logs based on date.", correct: false },
-        { answer: "It tracks workflow run times.", correct: false }
-    ]
-},
-{
-    question: "94. Which module in ServiceNow is used to configure 'Approval Rules'?",
-    options: [
-        { answer: "Incident > Workflows", correct: false },
-        { answer: "Service Desk > Configuration", correct: false },
-        { answer: "Workflow > Approval Rules", correct: true },
-        { answer: "Service Catalog > Catalog Definitions", correct: false }
-    ]
-},
-{
-    question: "95. What does the 'Advanced Reference Qualifier' do in ServiceNow?",
-    options: [
-        { answer: "It allows for scripting logic to dynamically filter records in a reference field.", correct: true },
-        { answer: "It allows adding custom fields to the reference table.", correct: false },
-        { answer: "It validates data before form submission.", correct: false },
-        { answer: "It automatically updates related fields on the form.", correct: false }
-    ]
-},
-{
-    question: "96. How are 'Notifications' triggered in ServiceNow?",
-    options: [
-        { answer: "Notifications are triggered by update sets.", correct: false },
-        { answer: "Notifications are triggered by role assignments.", correct: false },
-        { answer: "Notifications are triggered automatically when records are created.", correct: false },
-        { answer: "Notifications are triggered by events, conditions, or scripts.", correct: true }
-    ]
-},
-{
-    question: "97. What does the 'Update All' feature do in a list view?",
-    options: [
-        { answer: "It allows mass updates of selected records in a list.", correct: true },
-        { answer: "It moves the records to a different table.", correct: false },
-        { answer: "It updates only the selected record in the list.", correct: false },
-        { answer: "It exports the list of records as a report.", correct: false }
-    ]
-},
-{
-    question: "98. How is a 'Scoped Application' upgraded in ServiceNow?",
-    options: [
-        { answer: "By manually copying the application files to a new instance.", correct: false },
-        { answer: "By running a system script to update tables and workflows.", correct: false },
-        { answer: "By using the 'Upgrade Application' feature in the Application Manager.", correct: true },
-        { answer: "By importing the application from the ServiceNow Store.", correct: false }
-    ]
-},
-{
-    question: "99. What is the purpose of 'sys_trigger' table in ServiceNow?",
-    options: [
-        { answer: "It stores records for scheduled jobs and tasks.", correct: true },
-        { answer: "It stores logs of user interactions.", correct: false },
-        { answer: "It tracks changes to ACL policies.", correct: false },
-        { answer: "It manages data imports for custom tables.", correct: false }
-    ]
-},
-{
-    question: "100. What does the 'Service Level Agreement' (SLA) Workbench allow you to do?",
-    options: [
-        { answer: "It schedules background jobs to enforce SLAs.", correct: false },
-        { answer: "It tracks incidents that breach SLAs.", correct: false },
-        { answer: "It provides a visual interface for managing and defining SLAs.", correct: true },
-        { answer: "It automatically assigns incidents to technicians based on SLAs.", correct: false }
-    ]
-},
-{
-    question: "101. How do you perform a 'Record Insert' using GlideRecord in ServiceNow?",
-    options: [
-        { answer: "By using the 'insert()' method in a server-side script.", correct: true },
-        { answer: "By using the 'create()' function in a business rule.", correct: false },
-        { answer: "By using the 'update()' method on the client side.", correct: false },
-        { answer: "By calling the 'glideRecord.setValue()' function.", correct: false }
-    ]
-},
-{
-    question: "102. What does the 'gs.nowDateTime()' function return?",
-    options: [
-        { answer: "The current system date and time in GlideDateTime format.", correct: true },
-        { answer: "The current user session information.", correct: false },
-        { answer: "The timestamp for the next scheduled job.", correct: false },
-        { answer: "The last modified date of the current record.", correct: false }
-    ]
-},
-{
-    question: "103. What is 'ServiceNow Studio' used for?",
-    options: [
-        { answer: "It handles the management of update sets.", correct: false },
-        { answer: "It allows for auditing of business rule executions.", correct: false },
-        { answer: "It is used for importing and exporting records between instances.", correct: false },
-        { answer: "It provides a development environment for creating and managing applications.", correct: true }
-    ]
-},
-{
-    question: "104. How does the 'Data Policy' work in ServiceNow?",
-    options: [
-        { answer: "It updates field values based on workflows.", correct: false },
-        { answer: "It ensures that data entered into a form meets specific criteria before being saved.", correct: true },
-        { answer: "It manages field security based on user roles.", correct: false },
-        { answer: "It triggers business rules when a record is updated.", correct: false }
-    ]
-},
-{
-    question: "105. What does the 'Query Business Rule' in ServiceNow do?",
-    options: [
-        { answer: "It modifies a record's data before the query is executed.", correct: true },
-        { answer: "It performs real-time data validation in the background.", correct: false },
-        { answer: "It performs data imports based on queries.", correct: false },
-        { answer: "It triggers workflows based on query conditions.", correct: false }
-    ]
-},
-{
-    question: "106. What is the purpose of 'glide.ui.activity_stream' in ServiceNow?",
-    options: [
-        { answer: "It logs user activities in the system.", correct: false },
-        { answer: "It triggers workflows based on user interactions.", correct: false },
-        { answer: "It creates custom UI elements for record forms.", correct: false },
-        { answer: "It controls the visibility of activity streams on forms and lists.", correct: true }
-    ]
-},
-{
-    question: "107. Which method is used to update a record using GlideRecord?",
-    options: [
-        { answer: "save()", correct: false },
-        { answer: "setValue()", correct: false },
-        { answer: "create()", correct: false },
-        { answer: "update()", correct: true }
-    ]
-},
-{
-    question: "108. What does the 'gs.include()' function do in ServiceNow?",
-    options: [
-        { answer: "It imports data from other systems.", correct: false },
-        { answer: "It allows including external scripts into a ServiceNow script.", correct: true },
-        { answer: "It triggers workflows when data changes.", correct: false },
-        { answer: "It allows users to add external applications.", correct: false }
-    ]
-},
-{
-    question: "109. What is the purpose of 'gs.addErrorMessage()' in ServiceNow?",
-    options: [
-        { answer: "It generates a new task when an error occurs.", correct: false },
-        { answer: "It triggers a workflow to notify admins.", correct: false },
-        { answer: "It logs server-side errors to the system log.", correct: false },
-        { answer: "It displays an error message to the user on a form.", correct: true }
-    ]
-},
-{
-    question: "110. What is the 'Event Log' in ServiceNow used for?",
-    options: [
-        { answer: "To track and manage system events and custom events triggered by scripts.", correct: true },
-        { answer: "To audit changes made to business rules.", correct: false },
-        { answer: "To schedule jobs for importing data.", correct: false },
-        { answer: "To monitor background scripts in real-time.", correct: false }
-    ]
-},
-{
-    question: "111. What is the function of 'GlideAggregate' in ServiceNow?",
-    options: [
-        { answer: "It logs aggregate performance metrics for background jobs.", correct: false },
-        { answer: "It aggregates multiple tables into a single view.", correct: false },
-        { answer: "It triggers workflows based on aggregated data.", correct: false },
-        { answer: "It performs aggregation operations such as COUNT, SUM, MIN, MAX on a table.", correct: true }
-    ]
-},
-{
-    question: "112. What is the 'Condition Builder' in ServiceNow?",
-    options: [
-        { answer: "It triggers workflows based on incident states.", correct: false },
-        { answer: "It manages condition-based field validation.", correct: false },
-        { answer: "It is used to create query rules for data imports.", correct: false },
-        { answer: "It is a tool for creating and managing conditions for workflows and notifications.", correct: true }
-    ]
-},
-{
-    question: "113. How does 'gs.hasRole()' work in ServiceNow?",
-    options: [
-        { answer: "It retrieves all roles for a specific user.", correct: false },
-        { answer: "It audits changes made to user roles.", correct: false },
-        { answer: "It assigns a role to the current user.", correct: false },
-        { answer: "It checks if the current user has a specific role.", correct: true }
-    ]
-},
-{
-    question: "114. What does the 'Access Control Rule' (ACL) do in ServiceNow?",
-    options: [
-        { answer: "It manages data imports and exports for specific tables.", correct: false },
-        { answer: "It logs access control violations in the system.", correct: false },
-        { answer: "It restricts access to tables and records based on user roles and conditions.", correct: true },
-        { answer: "It triggers notifications when access is denied.", correct: false }
-    ]
-},
-{
-    question: "115. What is the use of 'g_form.clearMessages()' in ServiceNow?",
-    options: [
-        { answer: "It clears server-side errors in background jobs.", correct: false },
-        { answer: "It clears all client-side validations for the current form.", correct: false },
-        { answer: "It clears form field values entered by the user.", correct: false },
-        { answer: "It clears all user messages from the form interface.", correct: true }
-    ]
-},
-{
-    question: "116. What does 'gs.getMessage()' do in ServiceNow?",
-    options: [
-        { answer: "It logs messages to the server log.", correct: false },
-        { answer: "It retrieves system properties based on task states.", correct: false },
-        { answer: "It retrieves a localized message string from the Message table.", correct: true },
-        { answer: "It retrieves error logs for system failures.", correct: false }
-    ]
-},
-{
-    question: "117. How are 'Record Producers' used in ServiceNow?",
-    options: [
-        { answer: "They automate form submissions based on field changes.", correct: false },
-        { answer: "They are used to update records in the CMDB.", correct: false },
-        { answer: "They trigger background jobs for data imports.", correct: false },
-        { answer: "They are used to create records in specific tables via the Service Catalog.", correct: true }
-    ]
-},
-{
-    question: "118. What is 'Service Portal Designer' in ServiceNow?",
-    options: [
-        { answer: "It is used to schedule jobs for data imports.", correct: false },
-        { answer: "It manages ACLs for Service Portal pages.", correct: false },
-        { answer: "It is used to design workflows for task automation.", correct: false },
-        { answer: "It is a tool for creating and customizing pages and widgets in the Service Portal.", correct: true }
-    ]
-},
-{
-    question: "119. How does 'ServiceNow IntegrationHub' work?",
-    options: [
-        { answer: "It handles the execution of background scripts.", correct: false },
-        { answer: "It schedules jobs for data validation.", correct: false },
-        { answer: "It manages the import of data from external databases.", correct: false },
-        { answer: "It allows ServiceNow to integrate with external systems via APIs and connectors.", correct: true }
-    ]
-},
-{
-    question: "120. What is the purpose of 'Workflows' in ServiceNow?",
-    options: [
-        { answer: "To automate multi-step processes for records like incidents, change requests, and approvals.", correct: true },
-        { answer: "To manage UI policies across different forms.", correct: false },
-        { answer: "To automatically validate data in the CMDB.", correct: false },
-        { answer: "To perform background data imports.", correct: false }
-    ]
-}
-
-
-
-
-
-        ];
+        // Sample questions, categorized into sections
+        const sections = {
+            platform: [
+                {
+                    question: "1. What does the 'Client' option on a UI Action indicate?",
+                    options: [
+                        { answer: "The action will execute server-side code.", correct: false },
+                        { answer: "The action will run a business rule before performing.", correct: false },
+                        { answer: "The action will run on the client-side, in the user's browser.", correct: true },
+                        { answer: "The action will execute immediately after saving the record.", correct: false }
+                    ]
+                },
+                {
+                    question: "2. What is the Transform Map used for?",
+                    options: [
+                        { answer: "It schedules data imports from external sources.", correct: false },
+                        { answer: "It maps records from one ServiceNow instance to another.", correct: false },
+                        { answer: "It defines the relationship between fields in a data import and fields in a target table.", correct: true },
+                        { answer: "It manages the real-time syncing of data between multiple tables.", correct: false }
+                    ]
+                }
+            ],
+            instance: [
+                {
+                    question: "3. What method is most useful for debugging a Client Script in ServiceNow?",
+                    options: [
+                        { answer: "Adding log messages to the script using `gs.log()`.", correct: false },
+                        { answer: "Using the JavaScript Debugger in the browser's Developer Tools.", correct: true },
+                        { answer: "Checking the email logs for errors.", correct: false },
+                        { answer: "Running the Record Producer.", correct: false }
+                    ]
+                }
+            ],
+            applications: [
+                {
+                    question: "4. What is an Event in ServiceNow?",
+                    options: [
+                        { answer: "A scheduled job that runs a script periodically.", correct: false },
+                        { answer: "A server-side function that runs every time a record is created.", correct: false },
+                        { answer: "A notification sent to users whenever an important record is modified.", correct: false },
+                        { answer: "A mechanism for generating messages when specific conditions occur.", correct: true }
+                    ]
+                }
+            ],
+            selfService: [
+                {
+                    question: "5. What is the main purpose of an SLA in ServiceNow?",
+                    options: [
+                        { answer: "To track the total number of requests submitted by a user.", correct: false },
+                        { answer: "To ensure that the system is running efficiently.", correct: false },
+                        { answer: "To ensure that the agreed service levels are met and tracked.", correct: true },
+                        { answer: "To monitor performance of the ServiceNow instance.", correct: false }
+                    ]
+                }
+            ],
+            database: [
+                {
+                    question: "6. What does a Data Policy do in ServiceNow?",
+                    options: [
+                        { answer: "It controls the field's visibility in the form.", correct: false },
+                        { answer: "It validates the data entered into a field.", correct: false },
+                        { answer: "It enforces rules to ensure consistency of data across the application.", correct: true },
+                        { answer: "It restricts access to the records based on user roles.", correct: false }
+                    ]
+                }
+            ],
+            dataMigration: [
+                {
+                    question: "7. What is the use of GlideRecord in ServiceNow?",
+                    options: [
+                        { answer: "It is used to execute SQL queries on the database.", correct: false },
+                        { answer: "It is a server-side object used to perform operations on a database table.", correct: true },
+                        { answer: "It is used to handle client-side operations.", correct: false },
+                        { answer: "It is used to manage workflows.", correct: false }
+                    ]
+                }
+            ]
+        };
 
         // Function to render quiz
         function renderQuiz() {
@@ -1205,7 +210,7 @@
             // Get questions for the current page
             const start = currentPage * questionsPerPage;
             const end = start + questionsPerPage;
-            const pageQuestions = questions.slice(start, end);
+            const pageQuestions = currentSectionQuestions.slice(start, end);
 
             pageQuestions.forEach((q, index) => {
                 const questionDiv = document.createElement('div');
@@ -1228,7 +233,7 @@
 
             // Handle previous/next buttons visibility
             document.getElementById('prevBtn').classList.toggle('hidden', currentPage === 0);
-            document.getElementById('nextBtn').classList.toggle('hidden', end >= questions.length);
+            document.getElementById('nextBtn').classList.toggle('hidden', end >= currentSectionQuestions.length);
         }
 
         // Function to check answer
@@ -1254,10 +259,18 @@
             renderQuiz();
         }
 
-        // Initialize the quiz
-        renderQuiz();
+        // Function to start quiz based on section
+        function startQuiz(section) {
+            currentSectionQuestions = sections[section]; // Set the questions for the selected section
+            currentPage = 0; // Reset to the first page
+
+            // Hide section list and show quiz content
+            document.getElementById('sectionList').classList.add('hidden');
+            document.getElementById('quizContent').classList.remove('hidden');
+
+            renderQuiz();
+        }
     </script>
 
 </body>
 </html>
-
