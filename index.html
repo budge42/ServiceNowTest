@@ -67,6 +67,31 @@
             color: #721c24;
         }
 
+        .nav-btns {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .nav-btns button {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 1.1em;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .nav-btns button:hover {
+            background-color: #0056b3;
+        }
+
+        .hidden {
+            display: none;
+        }
+
     </style>
 </head>
 <body>
@@ -74,9 +99,16 @@
     <div class="container">
         <h1>ServiceNow Quiz</h1>
         <div id="quiz"></div>
+        <div class="nav-btns">
+            <button id="prevBtn" class="hidden" onclick="changePage(-1)">Previous</button>
+            <button id="nextBtn" onclick="changePage(1)">Next</button>
+        </div>
     </div>
 
     <script>
+        const questionsPerPage = 5;
+        let currentPage = 0;
+
         const questions = [
             {
                 question: "1. What does the 'Client' option on a UI Action indicate?",
@@ -266,7 +298,12 @@
             const quizContainer = document.getElementById('quiz');
             quizContainer.innerHTML = ''; // Clear previous content
 
-            questions.forEach((q, index) => {
+            // Get questions for the current page
+            const start = currentPage * questionsPerPage;
+            const end = start + questionsPerPage;
+            const pageQuestions = questions.slice(start, end);
+
+            pageQuestions.forEach((q, index) => {
                 const questionDiv = document.createElement('div');
                 questionDiv.classList.add('question');
                 questionDiv.innerHTML = `<h3>${q.question}</h3>`;
@@ -284,20 +321,21 @@
                 questionDiv.appendChild(optionsDiv);
                 quizContainer.appendChild(questionDiv);
             });
+
+            // Handle previous/next buttons visibility
+            document.getElementById('prevBtn').classList.toggle('hidden', currentPage === 0);
+            document.getElementById('nextBtn').classList.toggle('hidden', end >= questions.length);
         }
 
         // Function to check answer
         function checkAnswer(button, isCorrect) {
-            // Disable all buttons in the same question
             const buttons = button.parentElement.querySelectorAll('button');
             buttons.forEach(btn => btn.disabled = true);
 
-            // Highlight the selected answer
             if (isCorrect) {
                 button.classList.add('correct');
             } else {
                 button.classList.add('incorrect');
-                // Highlight the correct answer
                 buttons.forEach(btn => {
                     if (btn.textContent === button.parentElement.querySelector('button.correct')?.textContent) {
                         btn.classList.add('correct');
@@ -306,9 +344,16 @@
             }
         }
 
+        // Function to change page
+        function changePage(direction) {
+            currentPage += direction;
+            renderQuiz();
+        }
+
         // Initialize the quiz
         renderQuiz();
     </script>
 
 </body>
 </html>
+
