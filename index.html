@@ -135,48 +135,183 @@
         const sections = {
             platformOverview: [
     {
-        question: "What is the purpose of a 'User Preference' in ServiceNow?",
+        question: "1. What is the purpose of the 'Application Navigator' in ServiceNow?",
         options: [
-            { answer: "It stores a user's role and permissions.", correct: false },
-            { answer: "It allows users to personalize the look and feel of their instance.", correct: true },
-            { answer: "It provides access control for applications.", correct: false },
-            { answer: "It manages the lifecycle of records.", correct: false }
+            { answer: "To manage user permissions and roles.", correct: false },
+            { answer: "To provide a search and browse interface for accessing all applications and modules.", correct: true },
+            { answer: "To display a list of active incidents.", correct: false },
+            { answer: "To configure instance security settings.", correct: false }
         ]
     },
     {
-        question: "What is 'Contextual Search' in ServiceNow?",
+        question: "2. How can a user quickly filter the items displayed in the Application Navigator?",
         options: [
-            { answer: "It allows searching across all applications.", correct: false },
-            { answer: "It suggests relevant knowledge articles based on the current record.", correct: true },
-            { answer: "It provides full-text search capabilities across incidents.", correct: false },
-            { answer: "It filters records in a specific table.", correct: false }
+            { answer: "By adjusting their user preferences.", correct: false },
+            { answer: "By typing keywords into the Filter Navigator field.", correct: true },
+            { answer: "By using the Contextual Search feature.", correct: false },
+            { answer: "By modifying their role assignments.", correct: false }
         ]
     },
     {
-        question: "What is the difference between 'Form Layout' and 'Form Designer' in ServiceNow?",
+        question: "3. What is the primary function of the 'Edge' in ServiceNow's UI?",
         options: [
-            { answer: "Form Layout is used for arranging fields in sections, while Form Designer is used for adding new fields.", correct: false },
-            { answer: "Form Layout allows users to configure related lists, while Form Designer allows graphical drag-and-drop configuration of fields.", correct: true },
-            { answer: "Form Layout can only be used by administrators, while Form Designer is for all users.", correct: false },
-            { answer: "There is no difference between the two.", correct: false }
+            { answer: "To provide quick access to recently viewed items and favorites.", correct: true },
+            { answer: "To display system notifications and alerts.", correct: false },
+            { answer: "To manage background scripts and logs.", correct: false },
+            { answer: "To configure UI policies and scripts.", correct: false }
         ]
     },
     {
-        question: "How does ServiceNow's 'Global Search' feature work?",
+        question: "4. Which of the following is NOT a method to access a record in ServiceNow?",
         options: [
-            { answer: "It searches for records within a single table.", correct: false },
-            { answer: "It performs a full-text search across multiple tables in the instance.", correct: true },
-            { answer: "It only searches within a user's favorite records.", correct: false },
-            { answer: "It returns only Knowledge Articles in the search results.", correct: false }
+            { answer: "Using the search bar to find the record.", correct: false },
+            { answer: "Navigating through the Application Navigator.", correct: false },
+            { answer: "Directly entering the URL of the record.", correct: false },
+            { answer: "Modifying the system properties table.", correct: true }
         ]
     },
     {
-        question: "How can a user access their 'User Preferences' in ServiceNow?",
+        question: "5. What does the 'History' tab in ServiceNow provide to the user?",
         options: [
-            { answer: "By navigating to the 'Self-Service' application.", correct: false },
-            { answer: "Through the gear icon located on the ServiceNow header bar.", correct: true },
-            { answer: "By submitting a request to the Service Desk.", correct: false },
-            { answer: "By modifying their role permissions.", correct: false }
+            { answer: "A log of all system errors encountered.", correct: false },
+            { answer: "Access to their activity stream and recent records.", correct: true },
+            { answer: "A list of scheduled jobs and background scripts.", correct: false },
+            { answer: "An interface to modify their user preferences.", correct: false }
+        ]
+    },
+    {
+        question: "6. How can a user personalize their homepage in ServiceNow?",
+        options: [
+            { answer: "By editing the homepage XML code directly.", correct: false },
+            { answer: "By adding, removing, or rearranging widgets and reports.", correct: true },
+            { answer: "By changing their role permissions.", correct: false },
+            { answer: "By submitting a request to the system administrator.", correct: false }
+        ]
+    },
+    {
+        question: "7. What is the function of the 'Impersonate User' feature in ServiceNow?",
+        options: [
+            { answer: "To permanently change a user's role.", correct: false },
+            { answer: "To allow an admin to experience the platform as another user without logging out.", correct: true },
+            { answer: "To duplicate a user's data into a new account.", correct: false },
+            { answer: "To merge two user accounts into one.", correct: false }
+        ]
+    },
+    {
+        question: "8. Which of the following best describes 'Lists' in ServiceNow?",
+        options: [
+            { answer: "A set of modules grouped together for easy navigation.", correct: false },
+            { answer: "An arrangement of records from a data table displayed in a tabular format.", correct: true },
+            { answer: "A collection of user preferences and settings.", correct: false },
+            { answer: "A summary of all business rules in the system.", correct: false }
+        ]
+    },
+    {
+        question: "9. How can a user export data from a list in ServiceNow?",
+        options: [
+            { answer: "By using the 'Export' option in the list context menu.", correct: true },
+            { answer: "By copying and pasting directly into a spreadsheet.", correct: false },
+            { answer: "By running a background script.", correct: false },
+            { answer: "Data cannot be exported from lists.", correct: false }
+        ]
+    },
+    {
+        question: "10. What does the 'Form Context Menu' (the hamburger icon) allow you to do?",
+        options: [
+            { answer: "Access additional form actions like Save, Insert, and Delete.", correct: true },
+            { answer: "Switch between different applications.", correct: false },
+            { answer: "Adjust user interface settings and themes.", correct: false },
+            { answer: "Log out of the ServiceNow instance.", correct: false }
+        ]
+    },
+    {
+        question: "11. What is the purpose of 'Related Lists' in a form view?",
+        options: [
+            { answer: "To display lists of records that have a relationship to the current record.", correct: true },
+            { answer: "To show the history of changes made to the current record.", correct: false },
+            { answer: "To manage user access controls for the record.", correct: false },
+            { answer: "To provide shortcuts to commonly used modules.", correct: false }
+        ]
+    },
+    {
+        question: "12. How can you access the 'System Dictionary' in ServiceNow?",
+        options: [
+            { answer: "By navigating to System Definition > Dictionary.", correct: true },
+            { answer: "By clicking on the gear icon in the header bar.", correct: false },
+            { answer: "Through the 'Help' menu in the application navigator.", correct: false },
+            { answer: "By using the 'Impersonate User' feature.", correct: false }
+        ]
+    },
+    {
+        question: "13. What is the 'Banner Frame' in the ServiceNow interface?",
+        options: [
+            { answer: "The area that displays the content of modules and forms.", correct: false },
+            { answer: "The top portion of the interface that contains the logo, user menu, and global search.", correct: true },
+            { answer: "A collapsible menu that shows all applications.", correct: false },
+            { answer: "The section where the activity stream is displayed.", correct: false }
+        ]
+    },
+    {
+        question: "14. What is the functionality of the 'Connect Chat' feature in ServiceNow?",
+        options: [
+            { answer: "To provide real-time messaging between users within the platform.", correct: true },
+            { answer: "To connect ServiceNow instances to external messaging apps.", correct: false },
+            { answer: "To automate responses to common user inquiries.", correct: false },
+            { answer: "To monitor system performance and logs.", correct: false }
+        ]
+    },
+    {
+        question: "15. How does 'Presence' enhance collaboration in ServiceNow?",
+        options: [
+            { answer: "By showing which users are online and viewing the same records.", correct: true },
+            { answer: "By tracking user activity across all applications.", correct: false },
+            { answer: "By sending automated notifications to users.", correct: false },
+            { answer: "By integrating with social media platforms.", correct: false }
+        ]
+    },
+    {
+        question: "16. What is the purpose of 'Visual Task Boards' in ServiceNow?",
+        options: [
+            { answer: "To create graphical reports of incidents and changes.", correct: false },
+            { answer: "To manage tasks in a drag-and-drop, kanban-style interface.", correct: true },
+            { answer: "To design workflows and automate processes.", correct: false },
+            { answer: "To customize the application navigator.", correct: false }
+        ]
+    },
+    {
+        question: "17. How can users set their 'Delegate' in ServiceNow, and what is its purpose?",
+        options: [
+            { answer: "By modifying system properties; it allows reassigning roles.", correct: false },
+            { answer: "Through their user profile; it designates another user to receive their approvals and tasks during absence.", correct: true },
+            { answer: "Via the 'Impersonate User' feature; it allows sharing login credentials.", correct: false },
+            { answer: "By adjusting their user preferences; it changes notification settings.", correct: false }
+        ]
+    },
+    {
+        question: "18. What does the 'Activity Stream' provide in a record form?",
+        options: [
+            { answer: "A list of all modules related to the record.", correct: false },
+            { answer: "A real-time feed of updates, comments, and work notes associated with the record.", correct: true },
+            { answer: "An audit log of system errors.", correct: false },
+            { answer: "A place to configure form settings.", correct: false }
+        ]
+    },
+    {
+        question: "19. What is the function of 'Tags' in ServiceNow?",
+        options: [
+            { answer: "To classify and organize records for easy retrieval.", correct: true },
+            { answer: "To add metadata to system tables.", correct: false },
+            { answer: "To assign roles to users.", correct: false },
+            { answer: "To schedule automated tasks.", correct: false }
+        ]
+    },
+    {
+        question: "20. How does the 'Embedded Help' feature assist users in ServiceNow?",
+        options: [
+            { answer: "By providing contextual guidance and tutorials directly within the interface.", correct: true },
+            { answer: "By connecting them to customer support representatives.", correct: false },
+            { answer: "By sending email notifications about updates.", correct: false },
+            { answer: "By displaying system error messages.", correct: false }
         ]
     }
 ],
