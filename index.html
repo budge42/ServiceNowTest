@@ -502,51 +502,277 @@ instanceConfig: [
 
 appCollab: [
     {
-        question: "What is the role of a 'UI Policy' in ServiceNow?",
+        question: "1. What is the primary purpose of 'UI Policies' in ServiceNow?",
         options: [
-            { answer: "To trigger server-side events when certain conditions are met.", correct: false },
-            { answer: "To dynamically change form behavior, such as making fields mandatory or hidden.", correct: true },
-            { answer: "To validate form data before it is saved to the database.", correct: false },
-            { answer: "To manage user permissions for different applications.", correct: false }
+            { answer: "To dynamically change information on forms and control form field behavior.", correct: true },
+            { answer: "To enforce data consistency at the database level.", correct: false },
+            { answer: "To schedule automated tasks and jobs.", correct: false },
+            { answer: "To manage user authentication and authorization.", correct: false }
         ]
     },
     {
-        question: "How does the 'GlideAjax' API facilitate collaboration between client and server in ServiceNow?",
+        question: "2. How does 'Client Scripts' differ from 'UI Policies'?",
         options: [
-            { answer: "It allows client-side scripts to asynchronously call server-side scripts.", correct: true },
-            { answer: "It enables server-side logging for debugging client scripts.", correct: false },
-            { answer: "It handles authentication of external users accessing ServiceNow.", correct: false },
-            { answer: "It triggers workflows based on user actions.", correct: false }
+            { answer: "Client Scripts can execute complex logic and interact with form fields, whereas UI Policies offer limited control over form behavior.", correct: true },
+            { answer: "Client Scripts run on the server side, while UI Policies run on the client side.", correct: false },
+            { answer: "Client Scripts are used for form layout, whereas UI Policies are used for data validation.", correct: false },
+            { answer: "There is no difference; they serve the same purpose.", correct: false }
         ]
     },
     {
-        question: "What is a 'Record Producer' in the ServiceNow Service Catalog?",
+        question: "3. What is a 'Record Producer' in ServiceNow?",
         options: [
-            { answer: "It is a reusable form that creates task records based on user input.", correct: true },
-            { answer: "It is used to generate performance reports for incidents.", correct: false },
-            { answer: "It manages the security roles of users requesting catalog items.", correct: false },
-            { answer: "It is a template for creating custom workflows.", correct: false }
+            { answer: "A catalog item that allows users to create task-based records from the Service Catalog.", correct: true },
+            { answer: "A module that tracks changes to records in the system.", correct: false },
+            { answer: "A tool for importing data from external sources.", correct: false },
+            { answer: "A script that automates record creation based on schedules.", correct: false }
         ]
     },
     {
-        question: "How can 'Workflows' be used to improve collaboration in ServiceNow?",
+        question: "4. How can 'Workflows' enhance collaboration in ServiceNow applications?",
         options: [
-            { answer: "By automating approvals, notifications, and task assignments across departments.", correct: true },
-            { answer: "By sending emails to notify users when changes are made.", correct: false },
-            { answer: "By logging all user activity in the platform for auditing purposes.", correct: false },
-            { answer: "By enforcing role-based security policies for catalog items.", correct: false }
+            { answer: "By automating multi-step processes involving different users and roles.", correct: true },
+            { answer: "By providing real-time chat functionality between users.", correct: false },
+            { answer: "By generating reports on user activity.", correct: false },
+            { answer: "By enforcing security policies on data access.", correct: false }
         ]
     },
     {
-        question: "What is the function of 'SLA' in ServiceNow?",
+        question: "5. What is the role of 'Notifications' in facilitating collaboration?",
         options: [
-            { answer: "To track the performance of workflows.", correct: false },
-            { answer: "To ensure that service commitments to customers are met.", correct: true },
-            { answer: "To manage user permissions for accessing applications.", correct: false },
-            { answer: "To schedule tasks based on user roles.", correct: false }
+            { answer: "To send alerts and updates to users based on certain events or conditions.", correct: true },
+            { answer: "To log errors in the system for debugging purposes.", correct: false },
+            { answer: "To manage user roles and permissions.", correct: false },
+            { answer: "To schedule background scripts and jobs.", correct: false }
+        ]
+    },
+    {
+        question: "6. How does 'GlideAjax' improve client-server interaction in ServiceNow?",
+        options: [
+            { answer: "By allowing client-side scripts to call server-side scripts asynchronously without a full page refresh.", correct: true },
+            { answer: "By enabling the server to push updates to the client automatically.", correct: false },
+            { answer: "By handling authentication between client and server.", correct: false },
+            { answer: "By optimizing database queries for better performance.", correct: false }
+        ]
+    },
+    {
+        question: "7. What is the purpose of 'Chat Queue Entry' records in Connect Support?",
+        options: [
+            { answer: "To represent a user's request for help and facilitate agent assignment.", correct: true },
+            { answer: "To log chat history for auditing purposes.", correct: false },
+            { answer: "To manage scheduled maintenance windows.", correct: false },
+            { answer: "To store canned responses for chat agents.", correct: false }
+        ]
+    },
+    {
+        question: "8. How do 'Visual Task Boards' enhance team collaboration?",
+        options: [
+            { answer: "By providing a kanban-style interface for managing tasks and workflows.", correct: true },
+            { answer: "By allowing users to edit database tables directly.", correct: false },
+            { answer: "By generating automated notifications for task completion.", correct: false },
+            { answer: "By integrating with external project management tools.", correct: false }
+        ]
+    },
+    {
+        question: "9. What is the function of 'Activity Streams' in ServiceNow?",
+        options: [
+            { answer: "To display a live feed of record updates, comments, and work notes for enhanced communication.", correct: true },
+            { answer: "To manage system logs and error messages.", correct: false },
+            { answer: "To schedule data imports from external sources.", correct: false },
+            { answer: "To configure UI policies for forms.", correct: false }
+        ]
+    },
+    {
+        question: "10. How can 'Connect Chat' be utilized within applications for collaboration?",
+        options: [
+            { answer: "By enabling real-time messaging between users directly within the platform.", correct: true },
+            { answer: "By providing a forum for users to post long-form articles.", correct: false },
+            { answer: "By sending automated emails to users when records are updated.", correct: false },
+            { answer: "By generating reports on user interaction.", correct: false }
+        ]
+    },
+    {
+        question: "11. What are 'Access Control Rules' (ACLs) and how do they impact collaboration?",
+        options: [
+            { answer: "They define what data users can access and how they can interact with it, ensuring secure collaboration.", correct: true },
+            { answer: "They schedule automated tasks and scripts.", correct: false },
+            { answer: "They manage UI themes and layouts.", correct: false },
+            { answer: "They store user preferences for notifications.", correct: false }
+        ]
+    },
+    {
+        question: "12. How do 'Approval Rules' facilitate collaborative decision-making?",
+        options: [
+            { answer: "By automating the approval process, routing tasks to the appropriate approvers.", correct: true },
+            { answer: "By assigning tasks randomly to available users.", correct: false },
+            { answer: "By logging user activities for audits.", correct: false },
+            { answer: "By enabling users to bypass approval stages.", correct: false }
+        ]
+    },
+    {
+        question: "13. What is the role of 'Service Catalog' in collaboration?",
+        options: [
+            { answer: "To provide a centralized place for users to request services and goods, streamlining the fulfillment process.", correct: true },
+            { answer: "To manage system configurations and settings.", correct: false },
+            { answer: "To track incidents and problems within the organization.", correct: false },
+            { answer: "To store user credentials and authentication tokens.", correct: false }
+        ]
+    },
+    {
+        question: "14. How does 'Knowledge Management' support collaboration in ServiceNow?",
+        options: [
+            { answer: "By allowing users to create, share, and access knowledge articles, facilitating information sharing.", correct: true },
+            { answer: "By automating task assignments to users.", correct: false },
+            { answer: "By integrating with social media platforms.", correct: false },
+            { answer: "By providing real-time performance metrics.", correct: false }
+        ]
+    },
+    {
+        question: "15. What is a 'Scripted REST API' and how can it enhance application collaboration?",
+        options: [
+            { answer: "It allows external systems to interact with ServiceNow data and functionality via custom APIs.", correct: true },
+            { answer: "It automates data backups to remote servers.", correct: false },
+            { answer: "It provides templates for creating UI pages.", correct: false },
+            { answer: "It is used for client-side scripting on forms.", correct: false }
+        ]
+    },
+    {
+        question: "16. How can 'Event Management' improve collaborative efforts in an organization?",
+        options: [
+            { answer: "By detecting issues proactively and notifying the right teams to collaborate on resolutions.", correct: true },
+            { answer: "By scheduling meetings between team members.", correct: false },
+            { answer: "By enforcing security policies on user accounts.", correct: false },
+            { answer: "By managing license compliance across applications.", correct: false }
+        ]
+    },
+    {
+        question: "17. What is the purpose of 'Email Notifications' in ServiceNow?",
+        options: [
+            { answer: "To inform users about updates, approvals, or actions required, enhancing communication.", correct: true },
+            { answer: "To manage email server configurations.", correct: false },
+            { answer: "To send marketing emails to customers.", correct: false },
+            { answer: "To log system errors and exceptions.", correct: false }
+        ]
+    },
+    {
+        question: "18. How does 'Automated Test Framework' (ATF) aid in collaborative development?",
+        options: [
+            { answer: "By allowing teams to create and run automated tests, ensuring quality and reducing errors.", correct: true },
+            { answer: "By generating test data for user training.", correct: false },
+            { answer: "By managing user access to development environments.", correct: false },
+            { answer: "By scheduling code deployments during off-hours.", correct: false }
+        ]
+    },
+    {
+        question: "19. What is 'Delegated Development' in ServiceNow?",
+        options: [
+            { answer: "A feature that allows non-admin users with specific roles to develop and deploy applications within controlled parameters.", correct: true },
+            { answer: "A method of outsourcing development tasks to third-party vendors.", correct: false },
+            { answer: "A tool for migrating applications between instances.", correct: false },
+            { answer: "A process for automating development workflows.", correct: false }
+        ]
+    },
+    {
+        question: "20. How do 'Application Scopes' affect collaboration in application development?",
+        options: [
+            { answer: "By isolating applications to prevent naming conflicts and unauthorized data access.", correct: true },
+            { answer: "By allowing multiple developers to work on the same code simultaneously without conflicts.", correct: false },
+            { answer: "By integrating applications across different ServiceNow instances.", correct: false },
+            { answer: "By providing version control for application files.", correct: false }
+        ]
+    },
+    {
+        question: "21. What is the function of 'User Criteria' in Knowledge Base management?",
+        options: [
+            { answer: "To define which users or groups can read or contribute to knowledge articles.", correct: true },
+            { answer: "To assign roles to users based on their job titles.", correct: false },
+            { answer: "To schedule reviews of knowledge articles.", correct: false },
+            { answer: "To track user engagement with knowledge content.", correct: false }
+        ]
+    },
+    {
+        question: "22. How does 'Mobile Studio' support collaboration on the go?",
+        options: [
+            { answer: "By enabling developers to create and modify mobile applications for users to collaborate anywhere.", correct: true },
+            { answer: "By providing a platform for video conferencing within ServiceNow.", correct: false },
+            { answer: "By sending push notifications to users' mobile devices.", correct: false },
+            { answer: "By syncing ServiceNow data with external mobile apps.", correct: false }
+        ]
+    },
+    {
+        question: "23. What is the role of 'Related Lists' in enhancing collaboration on records?",
+        options: [
+            { answer: "To display related records and activities, providing context and facilitating teamwork.", correct: true },
+            { answer: "To create shortcuts to frequently used modules.", correct: false },
+            { answer: "To schedule notifications for record updates.", correct: false },
+            { answer: "To manage user access to specific records.", correct: false }
+        ]
+    },
+    {
+        question: "24. How do 'Task Relationships' improve collaboration in ServiceNow?",
+        options: [
+            { answer: "By linking tasks such as parent-child or dependent relationships, coordinating efforts among teams.", correct: true },
+            { answer: "By merging multiple tasks into one.", correct: false },
+            { answer: "By assigning tasks randomly to available users.", correct: false },
+            { answer: "By hiding tasks from users without specific roles.", correct: false }
+        ]
+    },
+    {
+        question: "25. What is 'Dynamic Translation' and how does it support global collaboration?",
+        options: [
+            { answer: "It automatically translates text fields into the user's preferred language, aiding communication across regions.", correct: true },
+            { answer: "It converts data formats between different applications.", correct: false },
+            { answer: "It synchronizes data across multiple instances.", correct: false },
+            { answer: "It adjusts the UI layout based on cultural preferences.", correct: false }
+        ]
+    },
+    {
+        question: "26. How does 'Service Portal' enhance user collaboration and self-service?",
+        options: [
+            { answer: "By providing a user-friendly interface for users to access services, knowledge, and collaborate through forums.", correct: true },
+            { answer: "By hosting the ServiceNow administration console.", correct: false },
+            { answer: "By managing backend configurations and integrations.", correct: false },
+            { answer: "By tracking system performance metrics.", correct: false }
+        ]
+    },
+    {
+        question: "27. What is the purpose of 'Activity Formatter' on forms?",
+        options: [
+            { answer: "To display the activity stream of a record, showing updates and fostering transparency.", correct: true },
+            { answer: "To format dates and times according to user preferences.", correct: false },
+            { answer: "To apply styles and themes to forms.", correct: false },
+            { answer: "To configure form field validations.", correct: false }
+        ]
+    },
+    {
+        question: "28. How can 'Import Sets' facilitate collaborative data management?",
+        options: [
+            { answer: "By allowing teams to bring in data from various sources for collective analysis and action.", correct: true },
+            { answer: "By exporting data to external systems.", correct: false },
+            { answer: "By synchronizing user accounts with third-party applications.", correct: false },
+            { answer: "By managing scheduled jobs and background scripts.", correct: false }
+        ]
+    },
+    {
+        question: "29. How do 'Templates' aid in collaboration and efficiency?",
+        options: [
+            { answer: "By providing pre-defined fields and values to quickly create records, ensuring consistency across teams.", correct: true },
+            { answer: "By customizing the UI for individual users.", correct: false },
+            { answer: "By generating reports on user activity.", correct: false },
+            { answer: "By enforcing security protocols on data access.", correct: false }
+        ]
+    },
+    {
+        question: "30. What is 'Connect Support' and how does it enhance collaboration?",
+        options: [
+            { answer: "A real-time messaging tool that connects end-users with support agents for immediate assistance.", correct: true },
+            { answer: "A feature for integrating third-party support systems.", correct: false },
+            { answer: "A module for scheduling maintenance windows.", correct: false },
+            { answer: "A tool for monitoring system health and performance.", correct: false }
         ]
     }
-],
+];
+
 
 selfService: [
     {
