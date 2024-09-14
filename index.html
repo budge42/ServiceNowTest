@@ -776,48 +776,273 @@ appCollab: [
 
 selfService: [
     {
-        question: "What does the 'Service Catalog' provide in ServiceNow?",
+        question: "1. What is the primary function of the 'Service Catalog' in ServiceNow?",
         options: [
-            { answer: "A portal for users to report incidents.", correct: false },
-            { answer: "A platform for requesting goods and services, automating the approval and delivery process.", correct: true },
-            { answer: "A way for users to manage their personal information.", correct: false },
-            { answer: "A system for tracking hardware assets.", correct: false }
+            { answer: "To manage incident records and resolutions.", correct: false },
+            { answer: "To provide a user-friendly portal for users to request goods and services.", correct: true },
+            { answer: "To schedule system maintenance tasks.", correct: false },
+            { answer: "To store knowledge articles for self-help.", correct: false }
         ]
     },
     {
-        question: "What is the 'Knowledge Base' in ServiceNow primarily used for?",
+        question: "2. What is a 'Catalog Item' in the ServiceNow Service Catalog?",
         options: [
-            { answer: "Tracking incidents and change requests.", correct: false },
-            { answer: "Creating and managing self-service articles for users to resolve issues independently.", correct: true },
-            { answer: "Monitoring performance of the ServiceNow instance.", correct: false },
-            { answer: "Logging system activity for audit purposes.", correct: false }
+            { answer: "A predefined request that users can select to order a product or service.", correct: true },
+            { answer: "An incident that is escalated to a higher support tier.", correct: false },
+            { answer: "A workflow that automates user permissions.", correct: false },
+            { answer: "A template for generating knowledge articles.", correct: false }
         ]
     },
     {
-        question: "How are 'Knowledge Articles' classified in ServiceNow?",
+        question: "3. How does 'Workflow' enhance automation in the Service Catalog?",
         options: [
-            { answer: "By role and permissions.", correct: false },
-            { answer: "By category, topic, and workflow state.", correct: true },
-            { answer: "By the user's department and location.", correct: false },
-            { answer: "By the application version used.", correct: false }
+            { answer: "By requiring manual approval for every request.", correct: false },
+            { answer: "By automating the fulfillment process through predefined steps.", correct: true },
+            { answer: "By allowing users to bypass the approval process.", correct: false },
+            { answer: "By automatically deleting old requests.", correct: false }
         ]
     },
     {
-        question: "What is a 'Record Producer' in ServiceNow?",
+        question: "4. What is the purpose of 'Variables' in a Catalog Item?",
         options: [
-            { answer: "It provides a user-friendly interface for creating tasks in ServiceNow.", correct: true },
-            { answer: "It manages the lifecycle of incident records.", correct: false },
-            { answer: "It imports data into the CMDB.", correct: false },
-            { answer: "It generates reports based on record updates.", correct: false }
+            { answer: "To store user preferences for future requests.", correct: false },
+            { answer: "To collect specific information from the user when ordering a Catalog Item.", correct: true },
+            { answer: "To manage access control for Catalog Items.", correct: false },
+            { answer: "To define the pricing of Catalog Items.", correct: false }
         ]
     },
     {
-        question: "How does 'Contextual Search' improve self-service in ServiceNow?",
+        question: "5. What is a 'Variable Set' in the Service Catalog?",
         options: [
-            { answer: "It automates form submissions.", correct: false },
-            { answer: "It dynamically suggests relevant knowledge articles based on the user's current record.", correct: true },
-            { answer: "It tracks the performance of workflows in the Service Catalog.", correct: false },
-            { answer: "It filters requests based on priority.", correct: false }
+            { answer: "A group of variables that can be reused across multiple Catalog Items.", correct: true },
+            { answer: "A set of predefined values for a variable.", correct: false },
+            { answer: "A collection of Catalog Items bundled together.", correct: false },
+            { answer: "A template for creating new variables.", correct: false }
+        ]
+    },
+    {
+        question: "6. How does 'Order Guides' improve the self-service experience?",
+        options: [
+            { answer: "By allowing users to submit multiple related Catalog Items in a single request.", correct: true },
+            { answer: "By providing tutorials on how to use the Service Catalog.", correct: false },
+            { answer: "By restricting users to only one item per request.", correct: false },
+            { answer: "By automatically approving all requests without review.", correct: false }
+        ]
+    },
+    {
+        question: "7. What is the function of 'Content Items' in the Service Catalog?",
+        options: [
+            { answer: "To provide informational content without ordering capabilities.", correct: true },
+            { answer: "To represent physical goods that can be ordered.", correct: false },
+            { answer: "To manage the pricing of Catalog Items.", correct: false },
+            { answer: "To automate data imports from external sources.", correct: false }
+        ]
+    },
+    {
+        question: "8. How does the 'Knowledge Base' contribute to self-service?",
+        options: [
+            { answer: "By storing system logs for administrators.", correct: false },
+            { answer: "By providing a repository of articles that help users solve issues independently.", correct: true },
+            { answer: "By tracking the performance of support agents.", correct: false },
+            { answer: "By managing user permissions and roles.", correct: false }
+        ]
+    },
+    {
+        question: "9. What is a 'Knowledge Article' in ServiceNow?",
+        options: [
+            { answer: "A record that tracks an incident resolution.", correct: false },
+            { answer: "An informational document that provides guidance on a specific topic.", correct: true },
+            { answer: "A user profile for storing preferences.", correct: false },
+            { answer: "A workflow for automating approvals.", correct: false }
+        ]
+    },
+    {
+        question: "10. How can users provide feedback on Knowledge Articles?",
+        options: [
+            { answer: "By modifying the article content directly.", correct: false },
+            { answer: "By using the 'Feedback' option to rate and comment on the article.", correct: true },
+            { answer: "By sending an email to the system administrator.", correct: false },
+            { answer: "By creating a new incident ticket.", correct: false }
+        ]
+    },
+    {
+        question: "11. What is the role of 'User Criteria' in the Knowledge Base?",
+        options: [
+            { answer: "To schedule automatic updates of articles.", correct: false },
+            { answer: "To define which users can read or contribute to specific Knowledge Bases or articles.", correct: true },
+            { answer: "To assign articles to categories.", correct: false },
+            { answer: "To translate articles into different languages.", correct: false }
+        ]
+    },
+    {
+        question: "12. How does 'Virtual Agent' enhance self-service capabilities?",
+        options: [
+            { answer: "By providing live chat support from human agents.", correct: false },
+            { answer: "By offering automated conversational experiences to help users resolve issues.", correct: true },
+            { answer: "By scheduling appointments with support staff.", correct: false },
+            { answer: "By generating reports on user activity.", correct: false }
+        ]
+    },
+    {
+        question: "13. What is the purpose of 'Agent Chat' in ServiceNow?",
+        options: [
+            { answer: "To enable asynchronous messaging between users.", correct: false },
+            { answer: "To allow users to connect with live agents for real-time support.", correct: true },
+            { answer: "To automate email notifications to users.", correct: false },
+            { answer: "To schedule system maintenance tasks.", correct: false }
+        ]
+    },
+    {
+        question: "14. How can 'Knowledge Management' be integrated with the 'Virtual Agent'?",
+        options: [
+            { answer: "By automatically translating articles into chat conversations.", correct: false },
+            { answer: "By allowing the Virtual Agent to search and present relevant Knowledge Articles during interactions.", correct: true },
+            { answer: "By replacing the Virtual Agent with Knowledge Base articles.", correct: false },
+            { answer: "By disabling the Virtual Agent when a Knowledge Article is available.", correct: false }
+        ]
+    },
+    {
+        question: "15. What is 'Service Portal' in ServiceNow?",
+        options: [
+            { answer: "A backend interface for system administrators.", correct: false },
+            { answer: "A user-friendly front-end interface that provides access to self-service features like the Service Catalog and Knowledge Base.", correct: true },
+            { answer: "A module for managing incidents and problems.", correct: false },
+            { answer: "A reporting tool for generating analytics.", correct: false }
+        ]
+    },
+    {
+        question: "16. How can 'Service Portal' be customized to improve user experience?",
+        options: [
+            { answer: "By modifying system code directly.", correct: false },
+            { answer: "By using the Service Portal Designer to configure pages, themes, and widgets.", correct: true },
+            { answer: "By changing user roles in the system.", correct: false },
+            { answer: "By editing the database records manually.", correct: false }
+        ]
+    },
+    {
+        question: "17. What is the purpose of 'Guided Tours' in ServiceNow?",
+        options: [
+            { answer: "To automate data imports from external sources.", correct: false },
+            { answer: "To provide interactive walkthroughs of the platform features to assist users.", correct: true },
+            { answer: "To schedule system backups.", correct: false },
+            { answer: "To manage user authentication.", correct: false }
+        ]
+    },
+    {
+        question: "18. How does 'Self-Service' improve efficiency in an organization?",
+        options: [
+            { answer: "By reducing the need for users to interact with support staff for common requests and issues.", correct: true },
+            { answer: "By eliminating the need for any human support.", correct: false },
+            { answer: "By requiring users to fill out extensive forms for every request.", correct: false },
+            { answer: "By disabling all forms of user support.", correct: false }
+        ]
+    },
+    {
+        question: "19. What is 'Request Management' in ServiceNow?",
+        options: [
+            { answer: "A process to handle and fulfill user requests efficiently.", correct: true },
+            { answer: "A module to manage incidents and problems.", correct: false },
+            { answer: "A tool for monitoring system performance.", correct: false },
+            { answer: "A feature to control user access permissions.", correct: false }
+        ]
+    },
+    {
+        question: "20. How does 'Automated Approvals' enhance the self-service process?",
+        options: [
+            { answer: "By bypassing all approvals and fulfilling requests immediately.", correct: false },
+            { answer: "By routing requests to the appropriate approvers automatically, reducing delays.", correct: true },
+            { answer: "By requiring manual intervention for every request.", correct: false },
+            { answer: "By rejecting requests that require approval.", correct: false }
+        ]
+    },
+    {
+        question: "21. What is 'Dynamic Translation' in the context of Knowledge Management?",
+        options: [
+            { answer: "An AI-powered feature that translates knowledge articles in real-time into the user's preferred language.", correct: true },
+            { answer: "A tool for manually translating articles.", correct: false },
+            { answer: "A feature that converts articles into audio format.", correct: false },
+            { answer: "A process for scheduling article reviews.", correct: false }
+        ]
+    },
+    {
+        question: "22. How does 'Service Level Management' relate to self-service?",
+        options: [
+            { answer: "By tracking and managing the performance of self-service processes against agreed service levels.", correct: true },
+            { answer: "By automating the creation of incidents.", correct: false },
+            { answer: "By disabling self-service features during peak hours.", correct: false },
+            { answer: "By requiring users to meet certain criteria before accessing self-service.", correct: false }
+        ]
+    },
+    {
+        question: "23. What is the purpose of 'Knowledge Feedback Loops'?",
+        options: [
+            { answer: "To delete outdated knowledge articles automatically.", correct: false },
+            { answer: "To collect user feedback on knowledge articles to improve content quality.", correct: true },
+            { answer: "To notify users when new articles are published.", correct: false },
+            { answer: "To restrict access to certain knowledge bases.", correct: false }
+        ]
+    },
+    {
+        question: "24. How can 'User Criteria' be applied to the Service Catalog?",
+        options: [
+            { answer: "By controlling which users can see and order specific Catalog Items.", correct: true },
+            { answer: "By determining the price of Catalog Items.", correct: false },
+            { answer: "By scheduling when Catalog Items are available.", correct: false },
+            { answer: "By modifying the approval process for requests.", correct: false }
+        ]
+    },
+    {
+        question: "25. What is 'Request Fulfillment' in ServiceNow?",
+        options: [
+            { answer: "The process of automatically generating incidents.", correct: false },
+            { answer: "The complete cycle from user request submission to delivery of the requested service or product.", correct: true },
+            { answer: "A module for managing user roles.", correct: false },
+            { answer: "A reporting tool for service performance.", correct: false }
+        ]
+    },
+    {
+        question: "26. How does 'Chatbot Designer' assist in automation?",
+        options: [
+            { answer: "By allowing developers to code chatbots from scratch.", correct: false },
+            { answer: "By providing a graphical interface to create and manage Virtual Agent conversations without coding.", correct: true },
+            { answer: "By scheduling chat sessions with support agents.", correct: false },
+            { answer: "By integrating with third-party chat applications.", correct: false }
+        ]
+    },
+    {
+        question: "27. What is 'Service Catalog Builder' used for?",
+        options: [
+            { answer: "To manage backend configurations for the Service Catalog.", correct: false },
+            { answer: "To enable non-technical users to create and maintain Catalog Items easily.", correct: true },
+            { answer: "To automate the approval workflows.", correct: false },
+            { answer: "To import Catalog Items from external sources.", correct: false }
+        ]
+    },
+    {
+        question: "28. How does 'Knowledge Article Versioning' benefit the self-service experience?",
+        options: [
+            { answer: "By allowing users to edit articles directly.", correct: false },
+            { answer: "By maintaining a history of changes and allowing rollbacks to previous versions.", correct: true },
+            { answer: "By deleting outdated articles automatically.", correct: false },
+            { answer: "By merging multiple articles into one.", correct: false }
+        ]
+    },
+    {
+        question: "29. What is the function of 'Catalog Client Scripts'?",
+        options: [
+            { answer: "To perform server-side operations during request fulfillment.", correct: false },
+            { answer: "To add client-side logic to Catalog Items for dynamic behavior on the form.", correct: true },
+            { answer: "To automate data imports into the Catalog.", correct: false },
+            { answer: "To manage user permissions for the Service Catalog.", correct: false }
+        ]
+    },
+    {
+        question: "30. How does 'Service Level Agreements' (SLAs) apply to self-service requests?",
+        options: [
+            { answer: "By tracking the time taken to fulfill requests and ensuring they meet defined service commitments.", correct: true },
+            { answer: "By preventing users from submitting requests during off-hours.", correct: false },
+            { answer: "By automating the rejection of requests that exceed budget limits.", correct: false },
+            { answer: "By providing discounts on services after certain thresholds.", correct: false }
         ]
     }
 ],
