@@ -318,51 +318,187 @@
 
 instanceConfig: [
     {
-        question: "What is a 'Transform Map' used for in ServiceNow?",
+        question: "1. What is the purpose of 'Dictionary Entries' in ServiceNow?",
         options: [
-            { answer: "It converts currency fields into different formats.", correct: false },
-            { answer: "It defines the mapping between source fields in an import set and target fields in a target table.", correct: true },
-            { answer: "It is used for converting client-side scripts into server-side scripts.", correct: false },
-            { answer: "It is used to configure role-based access control.", correct: false }
+            { answer: "They define the structure of a table and its fields in the database.", correct: true },
+            { answer: "They store user preferences and settings.", correct: false },
+            { answer: "They manage the history of record changes.", correct: false },
+            { answer: "They are used to configure UI policies.", correct: false }
         ]
     },
     {
-        question: "What is the purpose of 'Dictionary Overrides' in ServiceNow?",
+        question: "2. How does 'Table Inheritance' work in ServiceNow?",
         options: [
-            { answer: "To customize the form layout of specific fields.", correct: false },
-            { answer: "To allow administrators to define field properties for child tables in table inheritance.", correct: true },
-            { answer: "To override the access control rules of parent tables.", correct: false },
-            { answer: "To configure dynamic notifications based on record state.", correct: false }
+            { answer: "It allows a table to extend another table, inheriting its fields and business logic.", correct: true },
+            { answer: "It duplicates the data from one table to another.", correct: false },
+            { answer: "It merges two tables into a single table.", correct: false },
+            { answer: "It creates a backup copy of a table for auditing purposes.", correct: false }
         ]
     },
     {
-        question: "What does the 'Coalesce' field indicate in a Transform Map?",
+        question: "3. What is the function of 'Access Control Lists' (ACLs) in ServiceNow?",
         options: [
-            { answer: "It prevents any record from being updated during import.", correct: false },
-            { answer: "It determines whether existing records should be updated based on matching field values.", correct: true },
-            { answer: "It allows all imported records to be ignored.", correct: false },
-            { answer: "It defines a primary key for the import table.", correct: false }
+            { answer: "To schedule automated tasks and jobs.", correct: false },
+            { answer: "To define security rules that control the permissions of users and roles.", correct: true },
+            { answer: "To manage the UI layout of forms and lists.", correct: false },
+            { answer: "To log system events and errors.", correct: false }
         ]
     },
     {
-        question: "What is the best practice for creating custom tables in ServiceNow?",
+        question: "4. What is the purpose of 'Update Sets' in ServiceNow?",
         options: [
-            { answer: "Always inherit from an existing table, like the Task table, if possible.", correct: true },
-            { answer: "Create a standalone table to avoid dependency.", correct: false },
-            { answer: "Always create tables as a child of the CMDB.", correct: false },
-            { answer: "Use duplicate tables to retain structure.", correct: false }
+            { answer: "To move customizations between instances.", correct: true },
+            { answer: "To schedule data imports from external sources.", correct: false },
+            { answer: "To configure notifications and events.", correct: false },
+            { answer: "To manage user sessions and timeouts.", correct: false }
         ]
     },
     {
-        question: "What is a 'Business Rule' in ServiceNow?",
+        question: "5. What is a 'Client Script' and when does it execute?",
         options: [
-            { answer: "It runs client-side scripts when a record is updated.", correct: false },
-            { answer: "It runs server-side scripts when a record is inserted, updated, or deleted.", correct: true },
-            { answer: "It manages form layouts dynamically.", correct: false },
-            { answer: "It schedules background jobs for the instance.", correct: false }
+            { answer: "A script that runs on the server after a database operation.", correct: false },
+            { answer: "A script that runs in the user's browser when a form is loaded, changed, or submitted.", correct: true },
+            { answer: "A background script that automates data imports.", correct: false },
+            { answer: "A scheduled script that runs at specified intervals.", correct: false }
+        ]
+    },
+    {
+        question: "6. What is the difference between 'UI Policies' and 'Data Policies'?",
+        options: [
+            { answer: "UI Policies enforce rules on forms only, while Data Policies enforce rules on data regardless of the interface.", correct: true },
+            { answer: "Data Policies apply only to administrators, while UI Policies apply to all users.", correct: false },
+            { answer: "UI Policies are server-side scripts, while Data Policies are client-side scripts.", correct: false },
+            { answer: "There is no difference; they are the same.", correct: false }
+        ]
+    },
+    {
+        question: "7. How can you make a field read-only on a form using instance configuration?",
+        options: [
+            { answer: "By modifying the field's dictionary entry and setting 'Read-Only' to true.", correct: true },
+            { answer: "By creating a Business Rule to enforce read-only access.", correct: false },
+            { answer: "By changing the user's role permissions.", correct: false },
+            { answer: "By adjusting the system properties.", correct: false }
+        ]
+    },
+    {
+        question: "8. What is the purpose of 'System Properties' in ServiceNow?",
+        options: [
+            { answer: "To store configurations that affect the behavior of the instance.", correct: true },
+            { answer: "To manage user interface layouts and themes.", correct: false },
+            { answer: "To schedule reports and exports.", correct: false },
+            { answer: "To define data models and relationships.", correct: false }
+        ]
+    },
+    {
+        question: "9. What does the 'Application Access' setting control on a table in ServiceNow?",
+        options: [
+            { answer: "Which applications or scopes can access the table.", correct: true },
+            { answer: "The default form layout for records in the table.", correct: false },
+            { answer: "The data retention policy for the table.", correct: false },
+            { answer: "The roles required to view the table's data.", correct: false }
+        ]
+    },
+    {
+        question: "10. How can you control which fields are audited in ServiceNow?",
+        options: [
+            { answer: "By setting the 'Audit' checkbox in the dictionary entry of the field.", correct: true },
+            { answer: "By configuring a Business Rule to log changes.", correct: false },
+            { answer: "By enabling auditing in the system properties.", correct: false },
+            { answer: "By assigning specific roles to users.", correct: false }
+        ]
+    },
+    {
+        question: "11. What is a 'Script Include' and how is it used?",
+        options: [
+            { answer: "A reusable server-side script that can be called from other server scripts.", correct: true },
+            { answer: "A client-side script that runs on form submission.", correct: false },
+            { answer: "An external JavaScript file included in the instance.", correct: false },
+            { answer: "A script used to include external data sources.", correct: false }
+        ]
+    },
+    {
+        question: "12. What is the role of 'Data Dictionary' in instance configuration?",
+        options: [
+            { answer: "It defines every table and field in the system, including their data types and attributes.", correct: true },
+            { answer: "It stores translations for multi-language support.", correct: false },
+            { answer: "It logs all data imports and exports.", correct: false },
+            { answer: "It manages user roles and groups.", correct: false }
+        ]
+    },
+    {
+        question: "13. How do you make a field mandatory on a form without modifying the database schema?",
+        options: [
+            { answer: "By creating a UI Policy that sets the field to mandatory.", correct: true },
+            { answer: "By changing the field's dictionary entry to 'Mandatory'.", correct: false },
+            { answer: "By adding a client script to enforce mandatory entry.", correct: false },
+            { answer: "By setting the system property for mandatory fields.", correct: false }
+        ]
+    },
+    {
+        question: "14. What is 'Scoped Application' and why is it important in instance configuration?",
+        options: [
+            { answer: "An application that is limited to a specific user group.", correct: false },
+            { answer: "An application that runs only on mobile devices.", correct: false },
+            { answer: "An application that has its own namespace to avoid conflicts with other applications.", correct: true },
+            { answer: "An application that is scheduled to run at specific times.", correct: false }
+        ]
+    },
+    {
+        question: "15. How can you restrict access to a specific field in a table?",
+        options: [
+            { answer: "By creating an Access Control (ACL) rule for the field.", correct: true },
+            { answer: "By removing the field from the form layout.", correct: false },
+            { answer: "By hiding the field using a UI Policy.", correct: false },
+            { answer: "By deleting the field from the table.", correct: false }
+        ]
+    },
+    {
+        question: "16. What does the 'Schema Map' feature provide in ServiceNow?",
+        options: [
+            { answer: "A visual representation of tables and their relationships.", correct: true },
+            { answer: "An interface for scheduling database backups.", correct: false },
+            { answer: "A tool for designing forms and UI elements.", correct: false },
+            { answer: "A report of all system properties and their values.", correct: false }
+        ]
+    },
+    {
+        question: "17. What is the purpose of 'Field Normalization' in ServiceNow?",
+        options: [
+            { answer: "To standardize data entries to improve data quality and consistency.", correct: true },
+            { answer: "To convert data types during import.", correct: false },
+            { answer: "To compress data for storage efficiency.", correct: false },
+            { answer: "To encrypt sensitive fields in the database.", correct: false }
+        ]
+    },
+    {
+        question: "18. How does 'Domain Separation' affect instance configuration?",
+        options: [
+            { answer: "It allows multiple clients or organizations to share the same instance with data segregation.", correct: true },
+            { answer: "It separates database tables into different physical databases.", correct: false },
+            { answer: "It enables the instance to run in multiple geographic locations.", correct: false },
+            { answer: "It partitions the network traffic for security purposes.", correct: false }
+        ]
+    },
+    {
+        question: "19. What is the purpose of 'Plugins' in ServiceNow, and how do they impact instance configuration?",
+        options: [
+            { answer: "Plugins are used to extend the platform's functionality by adding new features or applications.", correct: true },
+            { answer: "Plugins are themes that change the appearance of the interface.", correct: false },
+            { answer: "Plugins are background scripts that optimize performance.", correct: false },
+            { answer: "Plugins are user-installed applications from third-party vendors.", correct: false }
+        ]
+    },
+    {
+        question: "20. How can you ensure that configuration changes are properly tracked and can be moved between instances?",
+        options: [
+            { answer: "By using Update Sets to capture configuration changes.", correct: true },
+            { answer: "By keeping a manual log of all changes made.", correct: false },
+            { answer: "By relying on system backups.", correct: false },
+            { answer: "By exporting the database and importing it into another instance.", correct: false }
         ]
     }
 ],
+
 
 appCollab: [
     {
